@@ -1,18 +1,16 @@
-import { View, Text, TextInput, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import GooglePlacesSearch from "../components/GooglePlacesSearch";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-import {
-  AdjustmentsIcon,
-  HeartIcon,
-  SearchIcon,
-  UserIcon,
-} from "react-native-heroicons/outline";
+import { MaterialIcons } from "@expo/vector-icons";
 import Categories from "../components/Categories";
 import ClosestRow from "../components/ClosestRow";
 import CeliacRow from "../components/CeliacRow";
@@ -77,7 +75,10 @@ export default function HomeScreen() {
   ];
 
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView
+      className="bg-white"
+  
+    >
       {/* Header */}
       <View className="flex-row pb-3 items-center mx-4 space-x-2">
         <View className="flex-1 flex-row">
@@ -123,6 +124,14 @@ export default function HomeScreen() {
         {/* Sorted for celiacs */}
         <CeliacRow closeRestaurantList={closeRestaurantList}></CeliacRow>
       </ScrollView>
+      <TouchableOpacity
+        className="absolute bottom-20 right-4 bg rounded-full p-2 bg-purple-800 drop-shadow-2xl"
+        onPress={() => {
+          navigation.navigate("AddRestaurant");
+        }}
+      >
+        <MaterialIcons name="add-location-alt" size={36} color="white" />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
