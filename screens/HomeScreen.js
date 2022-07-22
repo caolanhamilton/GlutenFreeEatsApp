@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import GooglePlacesSearch from "../components/GooglePlacesSearch";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -14,71 +14,37 @@ import { MaterialIcons } from "@expo/vector-icons";
 import Categories from "../components/Categories";
 import ClosestRow from "../components/ClosestRow";
 import CeliacRow from "../components/CeliacRow";
+import { getLocations, getDedicatedLocations } from "../api/apiCalls";
+import DedicatedRow from "../components/SafetyScoreRow";
+import TopRatedRow from "../components/TopReviewsRow";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
+  const [closeRestaurantList, setCloseRestaurantList] = useState([]);
+  const [dedicatedRestaurantList, setDedicatedRestaurantList] = useState([]);
+  const [sortBySafetyList, setSortBySafetyList] = useState([]);
+  const [topReviewsList, setTopReviewsList] = useState([]);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
 
-  const closeRestaurantList = [
-    {
-      id: 1,
-      categoryId: 5,
-      name: "Pizza Hut",
-      address: "123 Main St",
-      distance: "1.2km",
-      category: "Italian",
-      rating: 4.5,
-      price: "$",
-      image:
-        "https://assets.manchesterarndale.com/app/uploads/2020/07/Pizza-Hut.jpg",
-    },
-    {
-      id: 2,
-      categoryId: 5,
-      name: "Piccolino",
-      address: "453 Fake St",
-      distance: "1.2km",
-      category: "Italian",
-      rating: 4.2,
-      price: "$$",
-      image:
-        "https://confidentialguides-com.s3.eu-west-1.amazonaws.com/app/uploads/2018/09/20170607-San-Carlo-Cicchetti-New-Menu-14-660x500.jpg",
-    },
-    {
-      id: 3,
-      categoryId: 2,
-      name: "Wagamama",
-      address: "Unit 4, Parswood Road",
-      distance: "3.2km",
-      category: "Asian",
-      rating: 4.2,
-      price: "$$",
-      image:
-        "https://www.bighospitality.co.uk/var/wrbm_gb_hospitality/storage/images/_aliases/wrbm_large/8/0/5/7/1897508-1-eng-GB/Wagamama-launches-first-restaurant-in-Italy.jpg",
-    },
-    {
-      id: 4,
-      categoryId: 2,
-      name: "Pho",
-      address: "23, Exchange Square",
-      distance: "5",
-      category: "Asian",
-      rating: 4.2,
-      price: "$$",
-      image:
-        "https://i.pinimg.com/736x/55/12/f8/5512f8474406389e1ac53fb38e714810--pho-manchester.jpg",
-    },
-  ];
+  useEffect(() => {
+    getLocations({ lat: 53.483959, lng: -2.2426 }, false).then((response) => {
+      setCloseRestaurantList(response.data);
+      setSortBySafetyList(
+        [...response.data].sort((a, b) => b.avgSafetyRating - a.avgSafetyRating).filter((restaurant) => restaurant.avgSafetyRating > 3 && restaurant.dedicatedGlutenFree === false)
+      );
+      setTopReviewsList([...response.data].sort((a, b) => b.avgRating - a.avgRating));
+    });
+    getLocations({ lat: 53.483959, lng: -2.2426 }, 'dedicatedGlutenFree').then((response) => { 
+      setDedicatedRestaurantList(response.data);
+    })
+  }, []);
 
   return (
-    <SafeAreaView
-      className="bg-white"
-  
-    >
+    <SafeAreaView className="bg-white">
       {/* Header */}
       <View className="flex-row pb-3 items-center mx-4 space-x-2">
         <View className="flex-1 flex-row">
@@ -121,8 +87,14 @@ export default function HomeScreen() {
         <Categories></Categories>
         {/* Closest Restaurants Rows */}
         <ClosestRow closeRestaurantList={closeRestaurantList}></ClosestRow>
-        {/* Sorted for celiacs */}
-        <CeliacRow closeRestaurantList={closeRestaurantList}></CeliacRow>
+        {/* Dedicated Restaurants Rows */}
+        <DedicatedRow
+          dedicatedRestaurantList={dedicatedRestaurantList}
+        ></DedicatedRow>
+        {/* Sorted by safety row */}
+        <CeliacRow sortBySafetyList={sortBySafetyList}></CeliacRow>
+        {/* Sorted by safety row */}
+        <TopRatedRow topReviewsList={topReviewsList}></TopRatedRow>
       </ScrollView>
       <TouchableOpacity
         className="absolute bottom-20 right-4 bg rounded-full p-2 bg-purple-800 drop-shadow-2xl"
