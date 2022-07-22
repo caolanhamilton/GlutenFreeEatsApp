@@ -22,7 +22,12 @@ export default function ClosestRow({ closeRestaurantList }) {
         }}
       >
         {closeRestaurantList.map((restaurant) => {
-          return <RestaurantCard restaurant={restaurant} key={restaurant.id} />;
+          return (
+            <RestaurantCard
+              restaurant={restaurant}
+              key={restaurant.id}
+            />
+          );
         })}
       </ScrollView>
     </View>
