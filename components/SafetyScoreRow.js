@@ -1,17 +1,17 @@
-import { View, Text, TouchableOpacity, ScrollView} from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import RestaurantCard from "./RestaurantCard";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5 } from '@expo/vector-icons'
+import React from 'react'
 
-export default function CeliacRow({ sortBySafetyList }) {
+export default function DedicatedRow({ dedicatedRestaurantList }) {
   return (
     <View>
       <TouchableOpacity className="mt-4 flex-row items-center justify-between px-4">
-        <Text className="font-bold text-lg">Sorted by safety score</Text>
+        <Text className="font-bold text-lg">Dedicated gluten free spots</Text>
         <FontAwesome5 name="arrow-right" size={24} color="#6b21a8" />
       </TouchableOpacity>
       <Text className="text-xs text-gray-500 px-4">
-        Spots that serve gluten but with high safety score
+        Places reported to be 100% gluten free
       </Text>
       <ScrollView
         horizontal
@@ -22,7 +22,7 @@ export default function CeliacRow({ sortBySafetyList }) {
           paddingBottom: 20,
         }}
       >
-        {sortBySafetyList.map((restaurant) => {
+        {dedicatedRestaurantList.map((restaurant) => {
           return <RestaurantCard restaurant={restaurant} key={restaurant.id} />;
         })}
       </ScrollView>
