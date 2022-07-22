@@ -37,3 +37,30 @@ export const postReview = (id, reviewText, overAllRating, safetyRating) => {
   };
   return api.post(`/reviews`, review);
 };
+
+export const getLocations = (locationObj, dedicatedGlutenFree, safetyScore) => { 
+    let params;
+    if (dedicatedGlutenFree) {
+        params = {
+            lat: locationObj.lat,
+            lng: locationObj.lng,
+            filter: 'dedicatedGlutenFree',
+        };
+    } else if (safetyScore) {
+        params = {
+            lat: locationObj.lat,
+            lng: locationObj.lng,
+            filter: 'safetyScore',
+            sort: 'safetyScore',
+        };
+    } else {
+        params = {
+            lat: locationObj.lat,
+            lng: locationObj.lng,
+        };
+    }
+    return api.get(`/locations`, {
+        params: params,
+    });
+}
+
