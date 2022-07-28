@@ -4,10 +4,17 @@ import { StarIcon } from "react-native-heroicons/solid";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { GOOGLE_MAPS_KEY } from "@env";
 import { MaterialIcons, Entypo, Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function RestaurantCard({ restaurant }) {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity className="pr-2">
+    <TouchableOpacity
+      className="pr-2"
+      onPress={() => {
+        navigation.navigate("RestaurantScreen", { restaurant });
+      }}
+    >
       <Image
         className="h-56 w-72 rounded"
         source={{
@@ -15,11 +22,10 @@ export default function RestaurantCard({ restaurant }) {
         }}
       />
       <Text className="font-bold text-lg pt-2">{restaurant.name}</Text>
-
       <View className={"flex-row items-center space-x-1"}>
         <MaterialCommunityIcons name="star" size={24} color="#6b21a8" />
         <Text className="text-gray-500 text-base font-bold">
-          {restaurant.avgRating}
+          {restaurant.avgRating.toFixed(1)}
         </Text>
         <MaterialCommunityIcons
           name="map-marker-multiple"
@@ -31,7 +37,7 @@ export default function RestaurantCard({ restaurant }) {
         </Text>
         <MaterialIcons name="security" size={20} color="#6b21a8" />
         <Text className="text-gray-500 text-base">
-          {restaurant.avgSafetyRating}
+          {restaurant.avgSafetyRating.toFixed(1)}
         </Text>
         <View className="flex-row">
           {restaurant.dedicatedGlutenFree ? (
