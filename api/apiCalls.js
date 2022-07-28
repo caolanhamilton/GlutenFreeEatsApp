@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.0.15:8080/",
+  baseURL: "http://192.168.68.108:8080/",
 });
 
 export const createLocation = ({
@@ -28,14 +28,8 @@ export const createLocation = ({
   return api.post(`/locations`, location);
 };
 
-export const postReview = (id, reviewText, overAllRating, safetyRating) => {
-  const review = {
-    reviewText: reviewText,
-    overallRating: overAllRating,
-    safetyRating: safetyRating,
-    locationId: id,
-  };
-  return api.post(`/reviews`, review);
+export const postReview = (reviewObj) => {
+  return api.post(`/reviews`, reviewObj);
 };
 
 export const getLocations = (locationObj, dedicatedGlutenFree, safetyScore) => { 
@@ -62,5 +56,9 @@ export const getLocations = (locationObj, dedicatedGlutenFree, safetyScore) => {
     return api.get(`/locations`, {
         params: params,
     });
+}
+
+export const getReviewsById = (id) => {
+    return api.get(`/reviews/${id}`);
 }
 
