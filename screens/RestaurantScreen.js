@@ -54,8 +54,9 @@ console.log(restaurant)
             {/* Address */}
             <View className="p-4 pt-1">
               <TouchableOpacity onPress={() => {
+                const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
                 Linking.openURL(
-                  `geo:$0,0?q=${restaurant.name} ${restaurant.address}`
+                  `${scheme}$0,0?q=${restaurant.name} ${restaurant.address}`
                 )
               }}>
                 <Text className="text-lg">{restaurant.address}</Text>
@@ -84,8 +85,9 @@ console.log(restaurant)
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
+                    const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
                     Linking.openURL(
-                      `geo:$0,0?q=${restaurant.name} ${restaurant.address}`
+                      `${scheme}$0,0?q=${restaurant.name} ${restaurant.address}`
                     );
                   }}
                 >
