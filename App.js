@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomeScreen from "./screens/HomeScreen";
 import AddRestaurant from "./screens/AddRestaurant";
+import RestaurantScreen from "./screens/RestaurantScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,14 @@ export default function App() {
         <TailwindProvider>
           <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
-            <Stack.Screen name="AddRestaurant" component={AddRestaurant}></Stack.Screen>
+            <Stack.Screen
+              name="AddRestaurant"
+              component={AddRestaurant}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="RestaurantScreen"
+              component={RestaurantScreen}
+            ></Stack.Screen>
           </Stack.Navigator>
         </TailwindProvider>
       </NavigationContainer>
