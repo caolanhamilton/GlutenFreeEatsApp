@@ -10,7 +10,6 @@ import {
 import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { GooglePlacesSearch } from "../components/GooglePlacesSearch";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_MAPS_KEY } from "@env";
 import StarRating from "react-native-star-rating-widget";
@@ -45,7 +44,7 @@ export default function AddRestaurant() {
         keyboardShouldPersistTaps={"handled"}
         listViewDisplayed={false}
       >
-        <TouchableOpacity className="bg-slate-400 h-60">
+        <TouchableOpacity className="bg-purple-200 h-60">
           {!selectedGooglePlace ? (
             <View className="flex justify-center items-center h-full">
               <MaterialIcons
