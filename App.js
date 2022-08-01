@@ -7,6 +7,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomeScreen from "./screens/HomeScreen";
 import AddRestaurant from "./screens/AddRestaurant";
 import RestaurantScreen from "./screens/RestaurantScreen";
+import VerticalRestaurantsList from "./screens/VerticalRestaurantsList";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,10 @@ export default function App() {
             <Stack.Screen
               name="RestaurantScreen"
               component={RestaurantScreen}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="VerticalRestaurants"
+              component={VerticalRestaurantsList}
             ></Stack.Screen>
           </Stack.Navigator>
         </TailwindProvider>
