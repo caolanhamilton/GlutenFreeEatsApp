@@ -6,14 +6,13 @@ import {
   ScrollView,
   Linking,
 } from "react-native";
-import React, { useEffect, useRef, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { GOOGLE_MAPS_KEY } from "@env";
 import {
   Ionicons,
   MaterialCommunityIcons,
   MaterialIcons,
-  Entypo,
 } from "@expo/vector-icons";
 import { getReviewsById, postReview } from "../api/apiCalls";
 import ReviewCard from "../components/ReviewCard";
@@ -24,7 +23,7 @@ export default function RestaurantScreen(params) {
   const navigation = useNavigation();
   const [reviews, setReviews] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
-console.log(restaurant)
+  
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,

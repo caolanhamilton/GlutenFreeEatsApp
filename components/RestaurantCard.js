@@ -1,6 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import { StarIcon } from "react-native-heroicons/solid";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { GOOGLE_MAPS_KEY } from "@env";
 import { MaterialIcons, Entypo, Ionicons } from "@expo/vector-icons";
@@ -8,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function RestaurantCard({ restaurant }) {
   const navigation = useNavigation();
+  console.log(restaurant);
   return (
     <TouchableOpacity
       className="pr-2"

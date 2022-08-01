@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  TextInput,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
@@ -12,11 +11,9 @@ import GooglePlacesSearch from "../components/GooglePlacesSearch";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import Categories from "../components/Categories";
-import ClosestRow from "../components/ClosestRow";
-import CeliacRow from "../components/CeliacRow";
-import { getLocations, getDedicatedLocations } from "../api/apiCalls";
-import DedicatedRow from "../components/SafetyScoreRow";
-import TopRatedRow from "../components/TopReviewsRow";
+import RestaurantsRow from "../components/HorizontalRestaurantRow.js";
+import { getLocations,} from "../api/apiCalls";
+
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -48,7 +45,7 @@ export default function HomeScreen() {
       {/* Header */}
       <View className="flex-row pb-3 items-center mx-4 space-x-2">
         <View className="flex-1 flex-row">
-          <Text className="font-extrabold text-xl color-purple-800">
+          <Text className="font-extrabold text-2xl color-purple-800">
             Gluten Free Eats
           </Text>
         </View>
@@ -86,15 +83,27 @@ export default function HomeScreen() {
         {/* Categories */}
         <Categories></Categories>
         {/* Closest Restaurants Rows */}
-        <ClosestRow closeRestaurantList={closeRestaurantList}></ClosestRow>
+        <RestaurantsRow
+          restaurantList={closeRestaurantList}
+          listTitle="Closest Restaurants"
+          listSubtitle="Spots near you"
+        ></RestaurantsRow>
         {/* Dedicated Restaurants Rows */}
-        <DedicatedRow
-          dedicatedRestaurantList={dedicatedRestaurantList}
-        ></DedicatedRow>
+        <RestaurantsRow
+          restaurantList={dedicatedRestaurantList}
+          listTitle="Dedicated gluten free spots"
+          listSubtitle="Places reported to be 100% gluten free"
+        ></RestaurantsRow>
         {/* Sorted by safety row */}
-        <CeliacRow sortBySafetyList={sortBySafetyList}></CeliacRow>
+        <RestaurantsRow
+          restaurantList={sortBySafetyList}
+          listTitle="Sorted by safety score"
+          listSubtitle="Serve gluten but with a high safety score"
+        ></RestaurantsRow>
         {/* Sorted by safety row */}
-        <TopRatedRow topReviewsList={topReviewsList}></TopRatedRow>
+        <RestaurantsRow
+        restaurantList={topReviewsList} listTitle="Top rated spots" listSubtitle="Spots with the highest average rating"></RestaurantsRow>
+
       </ScrollView>
       <TouchableOpacity
         className="absolute bottom-20 right-4 bg rounded-full p-2 bg-purple-800 drop-shadow-2xl"
