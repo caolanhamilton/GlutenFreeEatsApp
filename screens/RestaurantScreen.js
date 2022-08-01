@@ -24,7 +24,7 @@ export default function RestaurantScreen(params) {
   const navigation = useNavigation();
   const [reviews, setReviews] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
-console.log(restaurant)
+  
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
