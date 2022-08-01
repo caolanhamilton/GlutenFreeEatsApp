@@ -7,7 +7,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomeScreen from "./screens/HomeScreen";
 import AddRestaurant from "./screens/AddRestaurant";
 import RestaurantScreen from "./screens/RestaurantScreen";
-import VerticalRestaurantsList from "./screens/VerticalRestaurantsList";
+import VerticalRestaurantsList from "./screens/VerticalRestaurantsListPage";
 
 const Stack = createNativeStackNavigator();
 
