@@ -15,7 +15,7 @@ export default function RestaurantCardHorizontal({ restaurant }) {
       }}
     >
       <Image
-        className="h-80 w-screen rounded-t-xl"
+        className="h-60 w-screen rounded-t-xl"
         source={{
           uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=${restaurant.image}&key=${GOOGLE_MAPS_KEY}`,
         }}
@@ -23,19 +23,19 @@ export default function RestaurantCardHorizontal({ restaurant }) {
       <View className="pl-2 pb-1">
         <Text className="font-bold text-xl pt-2">{restaurant.name}</Text>
         <View className={"flex-row items-center space-x-1"}>
-          <MaterialCommunityIcons name="star" size={34} color="#6b21a8" />
+          <MaterialCommunityIcons name="star" size={30} color="#6b21a8" />
           <Text className="text-gray-500 text-xl font-bold">
             {restaurant.avgRating.toFixed(1)}
           </Text>
           <MaterialCommunityIcons
             name="map-marker-multiple"
-            size={32}
+            size={28}
             color="#6b21a8"
           />
           <Text className="text-gray-500 text-xl font-bold">
             {restaurant.distance.toFixed(1)} mi
           </Text>
-          <MaterialIcons name="security" size={28} color="#6b21a8" />
+          <MaterialIcons name="security" size={26} color="#6b21a8" />
           <Text className="text-gray-500 text-xl font-bold">
             {restaurant.avgSafetyRating.toFixed(1)}
           </Text>
@@ -44,7 +44,7 @@ export default function RestaurantCardHorizontal({ restaurant }) {
               <>
                 <Ionicons
                   name="checkmark-circle-sharp"
-                  size={30}
+                  size={26}
                   color="#6b21a8"
                 />
                 <Text className="text-gray-500 text-xl font-bold">DGF</Text>
