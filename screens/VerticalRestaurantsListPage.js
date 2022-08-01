@@ -2,9 +2,9 @@ import {
   View,
   Text,
   ScrollView,
-  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import RestaurantCardHorizontal from "../components/RestaurantCardHorizontal";
@@ -25,12 +25,12 @@ export default function VerticalRestaurantsList(params) {
     <SafeAreaView className="bg-white">
       <View className="flex-row px-6 pb-3 items-center border-b-2 border-slate-100  w-screen">
         <TouchableOpacity
-          className="rounded-full h-12 w-12 bg-purple-800 flex items-center justify-center mr-2"
+          className="flex items-center justify-center mr-2"
           onPress={() => {
             navigation.goBack();
           }}
         >
-          <Ionicons name="ios-arrow-back-outline" size={28} color="white" />
+          <Ionicons name="ios-arrow-back-outline" size={30} color="#6b21a8" />
         </TouchableOpacity>
         <View>
           <Text className="text-xl pt-1 font-extrabold color-purple-800">
@@ -41,7 +41,10 @@ export default function VerticalRestaurantsList(params) {
           </Text>
         </View>
       </View>
-      <ScrollView className="bg-white">
+      <ScrollView
+        className="bg-white"
+        contentContainerStyle={{ paddingBottom: 66 }}
+      >
         {restaurantList.map((restaurant) => {
           return (
             <RestaurantCardHorizontal
