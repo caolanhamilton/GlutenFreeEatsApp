@@ -140,7 +140,6 @@ export default function AddReviewModal({
                   reviewObj["overallRating"] = overAllRating;
                   reviewObj["reviewText"] = reviewText;
                   postReview(reviewObj).then((res) => {
-                    console.log(res);
                   });
                     setReviews([...reviews, reviewObj]);
                     setModalVisible(false);

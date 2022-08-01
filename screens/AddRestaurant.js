@@ -70,7 +70,7 @@ export default function AddRestaurant() {
           <View className="w-full px-2 self-center py-2">
             <GooglePlacesAutocomplete
               className="h1 w1"
-              placeholder="Locations & Restaurants"
+              placeholder="Search for a restaurant or cafe"
               fetchDetails={true}
               query={{
                 key: GOOGLE_MAPS_KEY,

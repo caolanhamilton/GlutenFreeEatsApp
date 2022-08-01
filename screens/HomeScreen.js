@@ -9,11 +9,13 @@ import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import GooglePlacesSearch from "../components/GooglePlacesSearch";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import Categories from "../components/Categories";
 import RestaurantsRow from "../components/HorizontalRestaurantRow.js";
-import { getLocations,} from "../api/apiCalls";
-
+import { getLocations } from "../api/apiCalls";
+import * as Location from "expo-location";
+import { GOOGLE_MAPS_KEY } from "@env";
+import RadiusModal from "./RadiusModal";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -21,6 +23,43 @@ export default function HomeScreen() {
   const [dedicatedRestaurantList, setDedicatedRestaurantList] = useState([]);
   const [sortBySafetyList, setSortBySafetyList] = useState([]);
   const [topReviewsList, setTopReviewsList] = useState([]);
+  const [location, setLocation] = useState({
+    coords: { latitude: 51.5072, longitude: 0.1276 },
+  });
+  const [userLocation, setUserLocation] = useState(null);
+  const [locationName, setLocationName] = useState("London");
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [locationBtnClicked, setLocationBtnClicked] = useState(0);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [radius, setRadius] = useState(100);
+  Location.setGoogleApiKey(GOOGLE_MAPS_KEY);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+      let location = await Location.getLastKnownPositionAsync({});
+      setLocation(location);
+      setUserLocation(location);
+    })();
+  }, []);
+
+  useEffect(() => {
+    Location.reverseGeocodeAsync(location.coords, {
+      useGoogleMaps: true,
+    }).then((res) => {
+      const filteredResults = res.filter(
+        (result) => result.street && result.subregion
+      );
+      setLocationName(
+        `${filteredResults[0].street}, ${filteredResults[0].subregion}`
+      );
+    });
+  }, [location]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -28,22 +67,40 @@ export default function HomeScreen() {
   }, []);
 
   useEffect(() => {
-    getLocations({ lat: 53.483959, lng: -2.2426 }, false).then((response) => {
+    getLocations(
+      { lat: location.coords.latitude, lng: location.coords.longitude },
+      false,
+      false,
+      radius
+    ).then((response) => {
       setCloseRestaurantList(response.data);
       setSortBySafetyList(
-        [...response.data].sort((a, b) => b.avgSafetyRating - a.avgSafetyRating).filter((restaurant) => restaurant.avgSafetyRating > 3 && restaurant.dedicatedGlutenFree === false)
+        [...response.data]
+          .sort((a, b) => b.avgSafetyRating - a.avgSafetyRating)
+          .filter(
+            (restaurant) =>
+              restaurant.avgSafetyRating > 3 &&
+              restaurant.dedicatedGlutenFree === false
+          )
       );
-      setTopReviewsList([...response.data].sort((a, b) => b.avgRating - a.avgRating));
+      setTopReviewsList(
+        [...response.data].sort((a, b) => b.avgRating - a.avgRating)
+      );
     });
-    getLocations({ lat: 53.483959, lng: -2.2426 }, 'dedicatedGlutenFree').then((response) => { 
+    getLocations(
+      { lat: location.coords.latitude, lng: location.coords.longitude },
+      "dedicatedGlutenFree",
+      false,
+      radius
+    ).then((response) => {
       setDedicatedRestaurantList(response.data);
-    })
-  }, []);
+    });
+  }, [location, radius]);
 
   return (
     <SafeAreaView className="bg-white">
       {/* Header */}
-      <View className="flex-row pb-3 items-center mx-4 space-x-2">
+      <View className="flex-row items-center mx-4 space-x-2 mt-1">
         <View className="flex-1 flex-row">
           <Text className="font-extrabold text-2xl color-purple-800">
             Gluten Free Eats
@@ -62,22 +119,49 @@ export default function HomeScreen() {
           />
         </View>
       </View>
-      <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
+      <View className="flex-row items-center ml-4 space-x-0 pb-3">
+        <Ionicons name="location-outline" size={20} color="#6b7280" />
+        <Text className="text-gray-500 pr-2">{locationName}</Text>
+      </View>
+
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        contentContainerStyle={{ paddingBottom: 60 }}
+      >
         {/* SearchBar */}
         <View className="flex-row items-center space-x-2 pb-2 px-3">
-          <View className="flex-row space-x-2 flex-1 flex items-center justify-center">
+          <View className="flex-row space-x-0 flex-1 flex items-center justify-center">
             <MaterialCommunityIcons
               name="magnify"
               size={30}
               color="#6b21a8"
               padding={10}
             />
-            <GooglePlacesSearch></GooglePlacesSearch>
-            <MaterialCommunityIcons
-              name="tune-vertical"
-              size={30}
-              color="#6b21a8"
-            />
+            <GooglePlacesSearch
+              setLocation={setLocation}
+              setLocationName={setLocationName}
+            ></GooglePlacesSearch>
+            <View className="flex-row items-center justify-center pb-1">
+              <TouchableOpacity
+                onPress={() => {
+                  if (userLocation) {
+                    setLocation(userLocation);
+                  }
+                  setLocationBtnClicked(locationBtnClicked + 1);
+                }}
+              >
+                <MaterialIcons name="my-location" size={28} color="#6b21a8" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                    setModalVisible(true);
+                  }}>
+                <MaterialCommunityIcons
+                  name="map-marker-radius"
+                  size={30}
+                  color="#6b21a8"
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         {/* Categories */}
@@ -102,17 +186,25 @@ export default function HomeScreen() {
         ></RestaurantsRow>
         {/* Sorted by safety row */}
         <RestaurantsRow
-        restaurantList={topReviewsList} listTitle="Top rated spots" listSubtitle="Spots with the highest average rating"></RestaurantsRow>
-
+          restaurantList={topReviewsList}
+          listTitle="Top rated spots"
+          listSubtitle="Spots with the highest average rating"
+        ></RestaurantsRow>
       </ScrollView>
       <TouchableOpacity
-        className="absolute bottom-20 right-4 bg rounded-full p-2 bg-purple-800 drop-shadow-2xl"
+        className="absolute bottom-36 right-4 bg rounded-full p-2 bg-purple-800 drop-shadow-2xl"
         onPress={() => {
           navigation.navigate("AddRestaurant");
         }}
       >
         <MaterialIcons name="add-location-alt" size={36} color="white" />
       </TouchableOpacity>
+      <RadiusModal
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        radius={radius}
+        setRadius={setRadius}
+      ></RadiusModal>
     </SafeAreaView>
   );
 }

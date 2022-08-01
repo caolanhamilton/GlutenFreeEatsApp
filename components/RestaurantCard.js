@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function RestaurantCard({ restaurant }) {
   const navigation = useNavigation();
-  console.log(restaurant);
+
   return (
     <TouchableOpacity
       className="pr-2"
