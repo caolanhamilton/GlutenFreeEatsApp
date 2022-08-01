@@ -32,33 +32,40 @@ export const postReview = (reviewObj) => {
   return api.post(`/reviews`, reviewObj);
 };
 
-export const getLocations = (locationObj, dedicatedGlutenFree, safetyScore) => { 
-    let params;
-    if (dedicatedGlutenFree) {
-        params = {
-            lat: locationObj.lat,
-            lng: locationObj.lng,
-            filter: 'dedicatedGlutenFree',
-        };
-    } else if (safetyScore) {
-        params = {
-            lat: locationObj.lat,
-            lng: locationObj.lng,
-            filter: 'safetyScore',
-            sort: 'safetyScore',
-        };
-    } else {
-        params = {
-            lat: locationObj.lat,
-            lng: locationObj.lng,
-        };
-    }
-    return api.get(`/locations`, {
-        params: params,
-    });
-}
+export const getLocations = (
+  locationObj,
+  dedicatedGlutenFree,
+  safetyScore,
+  radius
+) => {
+  let params;
+  if (dedicatedGlutenFree) {
+    params = {
+      radius: radius,
+      lat: locationObj.lat,
+      lng: locationObj.lng,
+      filter: "dedicatedGlutenFree",
+    };
+  } else if (safetyScore) {
+    params = {
+      radius: radius,
+      lat: locationObj.lat,
+      lng: locationObj.lng,
+      filter: "safetyScore",
+      sort: "safetyScore",
+    };
+  } else {
+    params = {
+      radius: radius,
+      lat: locationObj.lat,
+      lng: locationObj.lng,
+    };
+  }
+  return api.get(`/locations`, {
+    params: params,
+  });
+};
 
 export const getReviewsById = (id) => {
-    return api.get(`/reviews/${id}`);
-}
-
+  return api.get(`/reviews/${id}`);
+};
