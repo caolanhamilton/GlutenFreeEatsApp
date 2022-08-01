@@ -1,12 +1,26 @@
-import { View, Text } from "react-native";
-import React from "react";
+import React, {useRef} from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_MAPS_KEY } from "@env";
+export default function GooglePlacesSearch({
+  setLocation,
+  setLocationName,
+}) {
+  const googlePlaceAutoCompleteRef = useRef(null);
 
-export default function GooglePlacesSearch() {
   return (
     <GooglePlacesAutocomplete
-      placeholder="Locations & Restaurants"
+      ref={googlePlaceAutoCompleteRef}
+      onPress={(data, details) => {
+        setLocation({
+          coords: {
+            latitude: details.geometry.location.lat,
+            longitude: details.geometry.location.lng,
+          },
+        });
+        setLocationName(data.description);
+        googlePlaceAutoCompleteRef.current?.setAddressText("");
+      }}
+      placeholder="Set location manually"
       fetchDetails={true}
       query={{
         key: GOOGLE_MAPS_KEY,
