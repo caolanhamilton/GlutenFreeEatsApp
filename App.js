@@ -8,11 +8,14 @@ import HomeScreen from "./screens/HomeScreen";
 import AddRestaurant from "./screens/AddRestaurant";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import VerticalRestaurantsList from "./screens/VerticalRestaurantsListPage";
+import { AuthContextProvider } from "./Context";
+import AccountScreen from "./screens/AccountScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <AuthContextProvider>
     <SafeAreaProvider>
       <NavigationContainer>
         <TailwindProvider>
@@ -30,10 +33,12 @@ export default function App() {
               name="VerticalRestaurants"
               component={VerticalRestaurantsList}
             ></Stack.Screen>
+            <Stack.Screen name="Account" component={AccountScreen}></Stack.Screen>
           </Stack.Navigator>
         </TailwindProvider>
       </NavigationContainer>
-    </SafeAreaProvider>
+      </SafeAreaProvider>
+      </AuthContextProvider>
   );
 }
 
