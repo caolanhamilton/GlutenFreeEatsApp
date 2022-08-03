@@ -33,7 +33,7 @@ export default function RestaurantCardHorizontal({ restaurant }) {
             color="#6b21a8"
           />
           <Text className="text-gray-500 text-xl font-bold">
-            {restaurant.distance.toFixed(1)} mi
+            {restaurant.distance?.toFixed(0)} mi
           </Text>
           <MaterialIcons name="security" size={26} color="#6b21a8" />
           <Text className="text-gray-500 text-xl font-bold">
