@@ -25,7 +25,7 @@ export default function RestaurantCard({ restaurant }) {
       <View className={"flex-row items-center space-x-1"}>
         <MaterialCommunityIcons name="star" size={24} color="#6b21a8" />
         <Text className="text-gray-500 text-base font-bold">
-          {restaurant.avgRating.toFixed(1)}
+          {restaurant.avgRating?.toFixed(1)}
         </Text>
         <MaterialCommunityIcons
           name="map-marker-multiple"
@@ -33,11 +33,11 @@ export default function RestaurantCard({ restaurant }) {
           color="#6b21a8"
         />
         <Text className="text-gray-500 text-base">
-          {restaurant.distance.toFixed(1)} mi
+          {restaurant.distance?.toFixed(0)} mi
         </Text>
         <MaterialIcons name="security" size={20} color="#6b21a8" />
         <Text className="text-gray-500 text-base">
-          {restaurant.avgSafetyRating.toFixed(1)}
+          {restaurant.avgSafetyRating?.toFixed(1)}
         </Text>
         <View className="flex-row">
           {restaurant.dedicatedGlutenFree ? (

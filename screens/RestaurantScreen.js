@@ -52,12 +52,14 @@ export default function RestaurantScreen(params) {
             </Text>
             {/* Address */}
             <View className="p-4 pt-1">
-              <TouchableOpacity onPress={() => {
-                const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
-                Linking.openURL(
-                  `${scheme}$0,0?q=${restaurant.name} ${restaurant.address}`
-                )
-              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
+                  Linking.openURL(
+                    `${scheme}$0,0?q=${restaurant.name} ${restaurant.address}`
+                  );
+                }}
+              >
                 <Text className="text-lg">{restaurant.address}</Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -116,13 +118,13 @@ export default function RestaurantScreen(params) {
               color="white"
             />
             <Text className="color-white text-base pr-4 font-bold">
-              {restaurant.distance.toFixed(1)} miles away
+              {restaurant.distance?.toFixed(0)} miles away
             </Text>
           </View>
           <View className="flex-row pl-2 items-center">
             <MaterialIcons name="security" size={20} color="white" />
             <Text className="color-white text-base pr-4 font-bold">
-              {restaurant.avgSafetyRating.toFixed(1)} safety score
+              {restaurant.avgSafetyRating?.toFixed(1)} safety score
             </Text>
           </View>
           <View className="flex-row items-center">
@@ -153,7 +155,7 @@ export default function RestaurantScreen(params) {
         <View className="self-end flex-row items-center"></View>
 
         <TouchableOpacity
-          className="rounded-full drop-shadow-lg  absolute bottom left-4 top-12 p-2 bg-purple-800 drop-shadow-2xl"
+          className="rounded-full  absolute bottom left-4 top-12 p-2 bg-purple-800"
           onPress={() => {
             navigation.goBack();
           }}

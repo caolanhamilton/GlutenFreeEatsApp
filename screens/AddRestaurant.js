@@ -7,7 +7,7 @@ import {
   Image,
   Modal,
 } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
@@ -17,6 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { createLocation, postReview } from "../api/apiCalls";
+import { AuthContext } from "../Context";
 
 export default function AddRestaurant() {
   const navigation = useNavigation();
@@ -28,6 +29,7 @@ export default function AddRestaurant() {
   const [dedicatedGlutenFree, setDedicatedGlutenFree] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [modalShow, setModalShow] = useState(false);
+  const { user, setUser } = useContext(AuthContext);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -290,7 +292,7 @@ export default function AddRestaurant() {
           </>
         </View>
         <TouchableOpacity
-          className="rounded-full drop-shadow-lg  absolute bottom left-4 top-12 p-2 bg-purple-800 drop-shadow-2xl"
+          className="rounded-full absolute bottom left-4 top-12 p-2 bg-purple-800 drop-shadow-2xl"
           onPress={() => {
             navigation.goBack();
           }}
@@ -304,13 +306,17 @@ export default function AddRestaurant() {
               setModalShow(true);
               selectedGooglePlace["dedicatedGlutenFree"] = dedicatedGlutenFree;
               selectedGooglePlace["description"] = description;
+              selectedGooglePlace["userId"] = user.uid;
               createLocation(selectedGooglePlace).then((addedLocation) => {
-                postReview(
-                  addedLocation.data.id,
-                  reviewText,
-                  overAllRating,
-                  safetyRating
-                );
+                const reviewObj = {
+                  locationId: addedLocation.data.id,
+                  dedicatedGlutenFree: dedicatedGlutenFree,
+                  safetyRating: safetyRating,
+                  overallRating: overAllRating,
+                  reviewText: reviewText,
+                  userId: user.uid,
+                };
+                postReview(reviewObj);
               });
             }}
           >
@@ -334,7 +340,7 @@ export default function AddRestaurant() {
                 navigation.goBack();
               }}
             >
-              <Ionicons name="home-outline" size={60} color="purple"/>
+              <Ionicons name="home-outline" size={60} color="purple" />
             </TouchableOpacity>
           </View>
         </Modal>

@@ -5,11 +5,12 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import StarRating from "react-native-star-rating-widget";
 import { MaterialIcons, Entypo, Ionicons } from "@expo/vector-icons";
 import Modal from "react-native-modal";
 import { postReview } from "../api/apiCalls";
+import { AuthContext } from "../Context";
 
 export default function AddReviewModal({
   restaurant,
@@ -23,6 +24,8 @@ export default function AddReviewModal({
   const [reviewText, setReviewText] = useState("");
   const [dedicatedGlutenFree, setDedicatedGlutenFree] = useState(false);
   const [reviewObj, setReviewObj] = useState({});
+  const { user, setUser } = useContext(AuthContext);
+
 
   return (
     <View className={"flex-1"}>
@@ -139,10 +142,10 @@ export default function AddReviewModal({
                   reviewObj["safetyRating"] = safetyRating;
                   reviewObj["overallRating"] = overAllRating;
                   reviewObj["reviewText"] = reviewText;
-                  postReview(reviewObj).then((res) => {
-                  });
-                    setReviews([...reviews, reviewObj]);
-                    setModalVisible(false);
+                  reviewObj["userId"] = user.uid;
+                  postReview(reviewObj).then((res) => {});
+                  setReviews([...reviews, reviewObj]);
+                  setModalVisible(false);
                 }}
               >
                 <Text className="font-bold text-base text-center">Post</Text>
