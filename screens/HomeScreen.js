@@ -1,11 +1,6 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState, useLayoutEffect, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import GooglePlacesSearch from "../components/GooglePlacesSearch";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -16,6 +11,7 @@ import { getLocations } from "../api/apiCalls";
 import * as Location from "expo-location";
 import { GOOGLE_MAPS_KEY } from "@env";
 import RadiusModal from "./RadiusModal";
+import { AuthContext } from "../Context";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -32,6 +28,8 @@ export default function HomeScreen() {
   const [locationBtnClicked, setLocationBtnClicked] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
   const [radius, setRadius] = useState(100);
+  const { user } = useContext(AuthContext);
+
   Location.setGoogleApiKey(GOOGLE_MAPS_KEY);
 
   useEffect(() => {
@@ -107,11 +105,17 @@ export default function HomeScreen() {
           </Text>
         </View>
         <View className="flex-row justify-end">
-          <MaterialCommunityIcons
-            name="account-circle-outline"
-            size={35}
-            color="#6b21a8"
-          />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Account");
+            }}
+          >
+            <MaterialCommunityIcons
+              name="account-circle-outline"
+              size={35}
+              color="#6b21a8"
+            />
+          </TouchableOpacity>
           <MaterialCommunityIcons
             name="heart-multiple"
             size={35}
@@ -152,9 +156,11 @@ export default function HomeScreen() {
               >
                 <MaterialIcons name="my-location" size={28} color="#6b21a8" />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => {
-                    setModalVisible(true);
-                  }}>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(true);
+                }}
+              >
                 <MaterialCommunityIcons
                   name="map-marker-radius"
                   size={30}
