@@ -13,6 +13,7 @@ export const createLocation = ({
   lng,
   name,
   phone,
+  userId
 }) => {
   const location = {
     name: name,
@@ -24,6 +25,7 @@ export const createLocation = ({
     lng: lng,
     phone: phone,
     categoryId: 3,
+    userId: userId
   };
   return api.post(`/locations`, location);
 };
