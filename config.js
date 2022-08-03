@@ -1,9 +1,10 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import { FIREBASE_API_KEY } from "@env";
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBo46Fz4CMAO34PiMeocPXfdLrR27w0K-M",
+  apiKey: FIREBASE_API_KEY,
   authDomain: "gfapp-356213.firebaseapp.com",
   projectId: "gfapp-356213",
   storageBucket: "gfapp-356213.appspot.com",
