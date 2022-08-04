@@ -25,7 +25,7 @@ export default function RestaurantCardHorizontal({ restaurant }) {
         <View className={"flex-row items-center space-x-1"}>
           <MaterialCommunityIcons name="star" size={30} color="#6b21a8" />
           <Text className="text-gray-500 text-xl font-bold">
-            {restaurant.avgRating.toFixed(1)}
+            {restaurant.avgRating?.toFixed(1)}
           </Text>
           <MaterialCommunityIcons
             name="map-marker-multiple"
@@ -33,11 +33,11 @@ export default function RestaurantCardHorizontal({ restaurant }) {
             color="#6b21a8"
           />
           <Text className="text-gray-500 text-xl font-bold">
-            {restaurant.distance?.toFixed(0)} mi
+            {restaurant.distance?.toFixed(1)} mi
           </Text>
           <MaterialIcons name="security" size={26} color="#6b21a8" />
           <Text className="text-gray-500 text-xl font-bold">
-            {restaurant.avgSafetyRating.toFixed(1)}
+            {restaurant.avgSafetyRating?.toFixed(1)}
           </Text>
           <View className="flex-row items-center space-x-1">
             {restaurant.dedicatedGlutenFree ? (
