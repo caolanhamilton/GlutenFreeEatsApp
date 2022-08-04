@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState, useLayoutEffect, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -116,11 +116,31 @@ export default function HomeScreen() {
               color="#6b21a8"
             />
           </TouchableOpacity>
-          <MaterialCommunityIcons
-            name="heart-multiple"
-            size={35}
-            color="#6b21a8"
-          />
+          <TouchableOpacity
+            onPress={() => {
+              if (user) {
+              } else {
+                Alert.alert(
+                  "Account required",
+                  "Please log in to view favourites",
+                  [
+                    ,
+                    {
+                      text: "Login or create account",
+                      onPress: () => console.log("Log in or create"),
+                    },
+                    { text: "Maybe later" },
+                  ]
+                );
+              }
+            }}
+          >
+            <MaterialCommunityIcons
+              name="heart-multiple"
+              size={35}
+              color={user ? "#6b21a8" : "#9ca3af"}
+            />
+          </TouchableOpacity>
         </View>
       </View>
       <View className="flex-row items-center ml-4 space-x-0 pb-3">
@@ -198,9 +218,24 @@ export default function HomeScreen() {
         ></RestaurantsRow>
       </ScrollView>
       <TouchableOpacity
-        className="absolute bottom-36 right-4 bg rounded-full p-2 bg-purple-800 drop-shadow-2xl"
+        className={"absolute bottom-36 right-4 bg rounded-full p-2 drop-shadow-2xl" + (user ? " bg-purple-800" : " bg-gray-400")}
         onPress={() => {
-          navigation.navigate("AddRestaurant");
+          if (user) {
+            navigation.navigate("AddRestaurant");
+          } else {
+            Alert.alert(
+              "Account required",
+              "Please log in to add a restaurant",
+              [
+                ,
+                {
+                  text: "Login or create account",
+                  onPress: () => console.log("Log in or create"),
+                },
+                { text: "Maybe later" },
+              ]
+            );
+          }
         }}
       >
         <MaterialIcons name="add-location-alt" size={36} color="white" />

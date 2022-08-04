@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
+  Alert,
 } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { GOOGLE_MAPS_KEY } from "@env";
 import {
@@ -17,12 +18,15 @@ import {
 import { getReviewsById, postReview } from "../api/apiCalls";
 import ReviewCard from "../components/ReviewCard";
 import AddReviewModal from "./AddReviewModal";
+import FavouriteBtn from "../components/FavouriteBtn";
+import { AuthContext } from "../Context";
 
 export default function RestaurantScreen(params) {
   const restaurant = params.route.params.restaurant;
   const navigation = useNavigation();
   const [reviews, setReviews] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
+  const { user } = useContext(AuthContext);
   
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -76,14 +80,7 @@ export default function RestaurantScreen(params) {
           <View className="w-1/3 justify-center">
             <View className="self-center">
               <View className="flex-col">
-                <TouchableOpacity>
-                  <MaterialCommunityIcons
-                    name="heart"
-                    size={50}
-                    color="#6b21a8"
-                  />
-                  <Text>Favorite</Text>
-                </TouchableOpacity>
+                <FavouriteBtn favouritedBy={restaurant.favouritedBy} locationId={restaurant.id} />
                 <TouchableOpacity
                   onPress={() => {
                     const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
@@ -108,7 +105,7 @@ export default function RestaurantScreen(params) {
           <View className="flex-row pl-2 items-center">
             <MaterialCommunityIcons name="star" size={24} color="white" />
             <Text className="color-white text-base font-bold pr-4">
-              {restaurant.avgRating.toFixed(1)} average rating
+              {restaurant.avgRating?.toFixed(1)} average rating
             </Text>
           </View>
           <View className="flex-row pl-2 items-center">
@@ -165,9 +162,25 @@ export default function RestaurantScreen(params) {
       </ScrollView>
       <View>
         <TouchableOpacity
-          className="absolute bottom-4 right-4 bg rounded-full p-2 bg-purple-800 drop-shadow-2xl"
+          className={"absolute bottom-4 right-4 bg rounded-full p-2 drop-shadow-2xl" + (user ? " bg-purple-800" : " bg-gray-400")}
           onPress={() => {
-            setModalVisible(true);
+            if (user) {
+              setModalVisible(true)
+            } else {Alert.alert(
+              "Account required",
+              "Please log in to leave a review",
+              [
+                ,
+                {
+                  text: "Login or create account",
+                  onPress: () => console.log("Log in or create"),
+                },
+                { text: "Maybe later" },
+              ]
+            );
+              
+            }
+            
           }}
         >
           <MaterialIcons name="add-comment" size={36} color="white" />

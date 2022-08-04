@@ -71,3 +71,17 @@ export const getLocations = (
 export const getReviewsById = (id) => {
   return api.get(`/reviews/${id}`);
 };
+
+export const addFavourite = (userId, locationId) => {
+  return api.post(`/favourites`, {
+    userId: userId,
+    locationId: locationId,
+  });
+};
+ 
+export const removeFavourite = (userId, locationId) => {
+  return api.patch(`/favourites`, {
+    userId: userId,
+    locationId: locationId,
+  });
+};
