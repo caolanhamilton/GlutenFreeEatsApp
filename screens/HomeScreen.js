@@ -119,6 +119,7 @@ export default function HomeScreen() {
           <TouchableOpacity
             onPress={() => {
               if (user) {
+                navigation.navigate("VerticalRestaurants", { restaurantList: false, listTitle: "Favourites", listSubtitle: "Spots you've saved", lat: location.coords.latitude, long: location.coords.longitude, radius: radius });
               } else {
                 Alert.alert(
                   "Account required",
