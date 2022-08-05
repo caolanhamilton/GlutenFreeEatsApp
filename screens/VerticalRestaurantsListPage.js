@@ -1,26 +1,38 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import RestaurantCardHorizontal from "../components/RestaurantCardHorizontal";
 import { Ionicons } from "@expo/vector-icons";
+import { getFavourites } from "../api/apiCalls";
+import { AuthContext } from "../Context";
 
 export default function VerticalRestaurantsList(params) {
-  const restaurantList = params.route.params.restaurantList;
   const listTitle = params.route.params.listTitle;
   const listSubtitle = params.route.params.listSubtitle;
+  const lat = params.route.params.lat;
+  const long = params.route.params.long;
+  const radius = params.route.params.radius;
+  const { user } = useContext(AuthContext);
+  const [restaurantList, setRestaurantList] = useState(
+    params.route.params.restaurantList
+  );
+
+
   const navigation = useNavigation();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
-      title: "Add a new location",
     });
   });
+
+  useEffect(() => {
+    getFavourites(user.uid, lat, long, radius).then(({ data }) => {
+      setRestaurantList(data);
+    });
+  }, []);
+
   return (
     <SafeAreaView className="bg-white">
       <View className="flex-row px-6 pb-3 items-center border-b-2 border-slate-100  w-screen">
@@ -45,14 +57,16 @@ export default function VerticalRestaurantsList(params) {
         className="bg-white"
         contentContainerStyle={{ paddingBottom: 66 }}
       >
-        {restaurantList.map((restaurant) => {
-          return (
-            <RestaurantCardHorizontal
-              restaurant={restaurant}
-              key={restaurant.id}
-            />
-          );
-        })}
+        {restaurantList &&
+          restaurantList.map((restaurant) => {
+            return (
+              <RestaurantCardHorizontal
+                restaurant={restaurant}
+                key={restaurant.id}
+                favourites={true}
+              />
+            );
+          })}
       </ScrollView>
     </SafeAreaView>
   );
