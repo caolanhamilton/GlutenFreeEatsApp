@@ -13,7 +13,7 @@ export const createLocation = ({
   lng,
   name,
   phone,
-  userId
+  userId,
 }) => {
   const location = {
     name: name,
@@ -25,7 +25,7 @@ export const createLocation = ({
     lng: lng,
     phone: phone,
     categoryId: 3,
-    userId: userId
+    userId: userId,
   };
   return api.post(`/locations`, location);
 };
@@ -78,10 +78,20 @@ export const addFavourite = (userId, locationId) => {
     locationId: locationId,
   });
 };
- 
+
 export const removeFavourite = (userId, locationId) => {
   return api.patch(`/favourites`, {
     userId: userId,
     locationId: locationId,
+  });
+};
+
+export const getFavourites = (userId, lat, long, radius) => {
+  return api.get(`/favourites/${userId}`, {
+    params: {
+      "lat": lat,
+      "long": long,
+      "radius": radius,
+    }
   });
 };
