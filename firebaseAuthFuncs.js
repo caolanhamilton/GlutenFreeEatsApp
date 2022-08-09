@@ -6,7 +6,7 @@ export const getIdToken = () => {
   return firebase
     .auth()
     .currentUser?.getIdToken(/* forceRefresh */ true)
-    .then(function (idToken) {
+    .then((idToken) => {
       return idToken;
     })
     .catch(function (error) {
