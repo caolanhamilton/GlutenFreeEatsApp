@@ -9,7 +9,7 @@ import AddRestaurant from "./screens/AddRestaurant";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import VerticalRestaurantsList from "./screens/VerticalRestaurantsListPage";
 import { AuthContextProvider } from "./Context";
-import AccountScreen from "./screens/AccountScreen";
+import LoginReg from "./screens/LoginReg";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,7 +33,7 @@ export default function App() {
               name="VerticalRestaurants"
               component={VerticalRestaurantsList}
             ></Stack.Screen>
-            <Stack.Screen name="Account" component={AccountScreen}></Stack.Screen>
+              <Stack.Screen name="LoginReg" component={LoginReg}></Stack.Screen>
           </Stack.Navigator>
         </TailwindProvider>
       </NavigationContainer>
