@@ -5,14 +5,6 @@ const api = axios.create({
   baseURL: "http://192.168.0.15:8080/",
 });
 
-export const getUserDetailsByID = async () => {
-  const idToken = await getIdToken();
-  return api.get("/users/getByUserId", {
-    headers: {
-      Authorization: `Bearer: ${idToken}`,
-    },
-  });
-};
 
 export const createLocation = ({
   address,
@@ -38,10 +30,6 @@ export const createLocation = ({
     userId: userId,
   };
   return api.post(`/locations`, location);
-};
-
-export const postReview = (reviewObj) => {
-  return api.post(`/reviews`, reviewObj);
 };
 
 export const getLocations = (
@@ -76,6 +64,10 @@ export const getLocations = (
   return api.get(`/locations`, {
     params: params,
   });
+};
+
+export const postReview = (reviewObj) => {
+  return api.post(`/reviews`, reviewObj);
 };
 
 export const getReviewsById = (id) => {
@@ -124,4 +116,13 @@ export const getFavourites = async (lat, long, radius) => {
       radius: radius,
     },
   });
-};
+}; //sorted by user location
+
+export const getUserDetailsByID = async () => {
+  const idToken = await getIdToken();
+  return api.get("/users/getByUserId", {
+    headers: {
+      Authorization: `Bearer: ${idToken}`,
+    },
+  });
+}; // users username favourite locations, posted reviews and posted places
