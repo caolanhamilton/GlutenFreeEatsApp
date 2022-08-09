@@ -7,11 +7,11 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import AccountInfo from "../components/AccountInfo";
-import {getIdToken, login, register, resetPassword, logout} from "../firebaseAuthFuncs";
+import { login, register, resetPassword, logout} from "../firebaseAuthFuncs";
 import { getUserDetailsByID } from "../api/apiCalls";
 
 export default function LoginReg() {
-  const { user, setUser, userFavouritedLocations, setUserFavouritedLocations } =
+  const { user, setUser, setUserFavouritedLocations } =
     useContext(AuthContext);
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
