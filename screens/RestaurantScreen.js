@@ -15,7 +15,7 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import { getReviewsById, postReview } from "../api/apiCalls";
+import { getReviewsById } from "../api/apiCalls";
 import ReviewCard from "../components/ReviewCard";
 import AddReviewModal from "./AddReviewModal";
 import FavouriteBtn from "../components/FavouriteBtn";
@@ -80,7 +80,7 @@ export default function RestaurantScreen(params) {
           <View className="w-1/3 justify-center">
             <View className="self-center">
               <View className="flex-col">
-                <FavouriteBtn favouritedBy={restaurant.favouritedBy} locationId={restaurant.id} />
+                <FavouriteBtn locationId={restaurant.id} restaurant={restaurant} />
                 <TouchableOpacity
                   onPress={() => {
                     const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
@@ -162,25 +162,27 @@ export default function RestaurantScreen(params) {
       </ScrollView>
       <View>
         <TouchableOpacity
-          className={"absolute bottom-4 right-4 bg rounded-full p-2 drop-shadow-2xl" + (user ? " bg-purple-800" : " bg-gray-400")}
+          className={
+            "absolute bottom-4 right-4 bg rounded-full p-2 drop-shadow-2xl" +
+            (user ? " bg-purple-800" : " bg-gray-400")
+          }
           onPress={() => {
             if (user) {
-              setModalVisible(true)
-            } else {Alert.alert(
-              "Account required",
-              "Please log in to leave a review",
-              [
-                ,
-                {
-                  text: "Login or create account",
-                  onPress: () => console.log("Log in or create"),
-                },
-                { text: "Maybe later" },
-              ]
-            );
-              
+              setModalVisible(true);
+            } else {
+              Alert.alert(
+                "Account required",
+                "Please log in to leave a review",
+                [
+                  ,
+                  {
+                    text: "Login or create account",
+                    onPress: () => console.log("Log in or create"),
+                  },
+                  { text: "Maybe later" },
+                ]
+              );
             }
-            
           }}
         >
           <MaterialIcons name="add-comment" size={36} color="white" />
