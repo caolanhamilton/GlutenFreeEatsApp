@@ -2,27 +2,39 @@ import { TouchableOpacity, Text, Alert } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../Context";
-import { addFavourite, removeFavourite } from "../api/apiCalls";
+import {
+  addFavourite,
+  removeFavourite,
+} from "../api/apiCalls";
 
-export default function FavouriteBtn({ favouritedBy, locationId }) {
+export default function FavouriteBtn({ locationId, restaurant }) {
+
   const [isFavourite, setIsFavourite] = useState(false);
-  const { user } = useContext(AuthContext);
 
+  const { user, userFavouritedLocations, setUserFavouritedLocations } =
+    useContext(AuthContext);
   const toggleFavourite = () => {
-    isFavourite
-      ? removeFavourite(user.uid, locationId)
-      : addFavourite(user.uid, locationId);
+    if (isFavourite) {
+      removeFavourite(locationId);
+      setUserFavouritedLocations(
+        [...userFavouritedLocations].filter(
+          (location) => location.id !== locationId
+        )
+      );
+    } else {
+      addFavourite(locationId);
+      setUserFavouritedLocations([...userFavouritedLocations, restaurant]);
+    }
     setIsFavourite(!isFavourite);
   };
 
   useEffect(() => {
-    favouritedBy.filter((userWhoHasFavourtied) => {
-      if (userWhoHasFavourtied?.id === user?.uid) {
-        setIsFavourite(true);
-      } else {
-        setIsFavourite(false);
-      }
-    });
+    if (
+      userFavouritedLocations.some((location) => location.id === locationId)
+    ) {
+
+      setIsFavourite(true);
+    }
   }, []);
 
   return (
