@@ -4,8 +4,12 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [idToken, setIdToken] = useState(null);
+  const [userAddedLocations, setUserAddedLocations] = useState([]);
+  const [userFavouritedLocations, setUserFavouritedLocations] = useState([]);
+  const [userReview, setUserReview] = useState([]);
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, idToken, setIdToken, userFavouritedLocations, setUserFavouritedLocations }}>
       {children}
     </AuthContext.Provider>
   );
