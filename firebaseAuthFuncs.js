@@ -82,6 +82,47 @@ export const resetPassword = (email) => {
     });
 };
 
+export const changeEmail = (newEmail, setNewEmailPress) => {
+  firebase
+    .auth()
+    .currentUser.updateEmail(newEmail)
+    .then(() => {
+      setNewEmailPress(false);
+      Alert.alert("Success", "Email changed successfully");
+    })
+    .catch((error) => {
+      console.log(error);
+      if (error.code === "auth/invalid-email") {
+        Alert.alert("Error", "Incorrect email formatting");
+      } else if (error.code === "auth/email-already-in-use") {
+        Alert.alert("Error", "Email already in use");
+      } else if (error.code === "auth/requires-recent-login") {
+        Alert.alert(
+          "Error",
+          "You must have recently signed in to change your email, please sign out and in again"
+        );
+      }
+    });
+};
+
+export const deleteAccount = () => {
+  firebase
+    .auth()
+    .currentUser.delete()
+    .then(() => {
+      Alert.alert("Success", "Account deleted successfully");
+    })
+    .catch((error) => {
+      console.log(error);
+      if (error.code === "auth/requires-recent-login") {
+        Alert.alert(
+          "Error",
+          "You must have recently signed in to change your email, please sign out and in again"
+        );
+      }
+    });
+};
+
 export const logout = () => {
   firebase.auth().signOut();
 };
