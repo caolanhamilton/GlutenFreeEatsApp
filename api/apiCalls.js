@@ -1,8 +1,10 @@
 import axios from "axios";
+import { getIdToken } from "../firebaseAuthFuncs";
 
 const api = axios.create({
   baseURL: "http://192.168.0.15:8080/",
 });
+
 
 export const createLocation = ({
   address,
@@ -28,10 +30,6 @@ export const createLocation = ({
     userId: userId,
   };
   return api.post(`/locations`, location);
-};
-
-export const postReview = (reviewObj) => {
-  return api.post(`/reviews`, reviewObj);
 };
 
 export const getLocations = (
@@ -68,30 +66,63 @@ export const getLocations = (
   });
 };
 
+export const postReview = (reviewObj) => {
+  return api.post(`/reviews`, reviewObj);
+};
+
 export const getReviewsById = (id) => {
   return api.get(`/reviews/${id}`);
 };
 
-export const addFavourite = (userId, locationId) => {
-  return api.post(`/favourites`, {
-    userId: userId,
-    locationId: locationId,
-  });
-};
-
-export const removeFavourite = (userId, locationId) => {
-  return api.patch(`/favourites`, {
-    userId: userId,
-    locationId: locationId,
-  });
-};
-
-export const getFavourites = (userId, lat, long, radius) => {
-  return api.get(`/favourites/${userId}`, {
-    params: {
-      "lat": lat,
-      "long": long,
-      "radius": radius,
+export const addFavourite = async (locationId) => {
+  const idToken = await getIdToken();
+  return api.post(
+    `/favourites`,
+    {
+      locationId: locationId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer: ${idToken}`,
+      },
     }
-  });
+  );
 };
+
+export const removeFavourite = async (locationId) => {
+  const idToken = await getIdToken();
+  return api.patch(
+    `/favourites`,
+    {
+      locationId: locationId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer: ${idToken}`,
+      },
+    }
+  );
+};
+
+export const getFavourites = async (lat, long, radius) => {
+  const idToken = await getIdToken();
+  return api.get(`/favourites`, {
+    headers: {
+      Authorization: `Bearer: ${idToken}`,
+    },
+    params: {
+      lat: lat,
+      long: long,
+      radius: radius,
+    },
+  });
+}; //sorted by user location
+
+export const getUserDetailsByID = async () => {
+  const idToken = await getIdToken();
+  return api.get("/users/getByUserId", {
+    headers: {
+      Authorization: `Bearer: ${idToken}`,
+    },
+  });
+}; // users username favourite locations, posted reviews and posted places

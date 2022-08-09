@@ -107,7 +107,7 @@ export default function HomeScreen() {
         <View className="flex-row justify-end">
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Account");
+              navigation.navigate("LoginReg");
             }}
           >
             <MaterialCommunityIcons
@@ -119,7 +119,14 @@ export default function HomeScreen() {
           <TouchableOpacity
             onPress={() => {
               if (user) {
-                navigation.navigate("VerticalRestaurants", { restaurantList: false, listTitle: "Favourites", listSubtitle: "Spots you've saved", lat: location.coords.latitude, long: location.coords.longitude, radius: radius });
+                navigation.navigate("VerticalRestaurants", {
+                  restaurantList: false,
+                  listTitle: "Favourites",
+                  listSubtitle: "Spots you've saved",
+                  lat: location.coords.latitude,
+                  long: location.coords.longitude,
+                  radius: radius,
+                });
               } else {
                 Alert.alert(
                   "Account required",
@@ -219,7 +226,10 @@ export default function HomeScreen() {
         ></RestaurantsRow>
       </ScrollView>
       <TouchableOpacity
-        className={"absolute bottom-36 right-4 bg rounded-full p-2 drop-shadow-2xl" + (user ? " bg-purple-800" : " bg-gray-400")}
+        className={
+          "absolute bottom-36 right-4 bg rounded-full p-2 drop-shadow-2xl" +
+          (user ? " bg-purple-800" : " bg-gray-400")
+        }
         onPress={() => {
           if (user) {
             navigation.navigate("AddRestaurant");
