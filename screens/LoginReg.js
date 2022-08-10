@@ -7,20 +7,21 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import AccountInfo from "../components/AccountInfo";
-import { login, register, resetPassword, logout} from "../firebaseAuthFuncs";
+import { login, register, resetPassword, logout } from "../firebaseAuthFuncs";
 import { getUserDetailsByID } from "../api/apiCalls";
 
 export default function LoginReg() {
-  const { user, setUser, setUserFavouritedLocations } =
-    useContext(AuthContext);
+  const { user, setUser, setUserFavouritedLocations } = useContext(AuthContext);
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [hasAccount, setHasAccount] = useState(true);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   function onAuthStateChanged(userDetails) {
-    setUser(userDetails);  
+    setUser(userDetails);
   }
 
   useLayoutEffect(() => {
@@ -36,8 +37,8 @@ export default function LoginReg() {
 
   useEffect(() => {
     if (user) {
-      getUserDetailsByID(user.uid).then(({ data }) => {
-        setUserFavouritedLocations(data.favouritedLocations);
+      getUserDetailsByID().then(({ data }) => {
+        setUserFavouritedLocations(data?.favouritedLocations);
       });
     }
   }, [user]);
@@ -93,42 +94,88 @@ export default function LoginReg() {
             ></TextInput>
 
             {!hasAccount && (
-              <TextInput
-                className={
-                  "bg-white text-[18px] h-12 w-full rounded-3xl p-2 mb-6" +
-                  (password.length === confirmPassword.length &&
-                  confirmPassword.length > 5
-                    ? " bg-green-100"
-                    : " bg-red-100") +
-                  (confirmPassword.length === 0 ? "bg-white" : "")
-                }
-                placeholder="Confirm password"
-                onChangeText={(text) => {
-                  setConfirmPassword(text);
-                }}
-                value={confirmPassword}
-                autoCapitalize="none"
-                lineHeight={22}
-              ></TextInput>
+              <>
+                <TextInput
+                  autoCapitalize="none"
+                  className={
+                    "bg-white text-[18px] h-12 w-full rounded-3xl p-2 mb-6" +
+                    (password.length === confirmPassword.length &&
+                    confirmPassword.length > 5
+                      ? " bg-green-100"
+                      : " bg-red-100") +
+                    (confirmPassword.length === 0 ? "bg-white" : "")
+                  }
+                  placeholder="Confirm password"
+                  onChangeText={(text) => {
+                    setConfirmPassword(text);
+                  }}
+                  value={confirmPassword}
+                  lineHeight={22}
+                ></TextInput>
+                <TextInput
+                  className={
+                    "bg-white text-[18px] h-12 w-full rounded-3xl p-2 mb-6"
+                  }
+                  placeholder="First name"
+                  onChangeText={(text) => {
+                    setFirstName(text);
+                  }}
+                  value={firstName}
+                  autoCapitalize="none"
+                  lineHeight={22}
+                ></TextInput>
+                <TextInput
+                  className={
+                    "bg-white text-[18px] h-12 w-full rounded-3xl p-2 mb-6"
+                  }
+                  placeholder="Last name"
+                  onChangeText={(text) => {
+                    setLastName(text);
+                  }}
+                  value={lastName}
+                  lineHeight={22}
+                ></TextInput>
+              </>
             )}
 
             <TouchableOpacity
               onPress={() => {
                 if (hasAccount && password.length !== 0) {
-                  login(email, password, setEmail, setPassword, setConfirmPassword)
+                  login(
+                    email,
+                    password,
+                    setEmail,
+                    setPassword,
+                    setConfirmPassword
+                  );
                 } else if (hasAccount && password.length === 0) {
                   Alert.alert("Password missing", "Please enter a password");
                 }
                 if (
                   !hasAccount &&
                   password.length !== 0 &&
-                  password === confirmPassword
+                  password === confirmPassword &&
+                  firstName.length !== 0 &&
+                  lastName.length !== 0
                 ) {
-                  register(email, password);
+                  register(
+                    email,
+                    password,
+                    firstName,
+                    lastName,
+                    setEmail,
+                    setPassword,
+                    setConfirmPassword,
+                    setFirstName,
+                    setLastName
+                  );
                 } else if (password.length === 0) {
                   Alert.alert("Password missing", "Please enter a password");
                 } else if (!hasAccount && password !== confirmPassword) {
                   Alert.alert("Passwords do not match", "Please try again");
+                } else if (!hasAccount && (firstName.length === 0 || lastName.length === 0)) {
+                  console.log(hasAccount)
+                  Alert.alert("Name missing", "Please enter a name");
                 }
               }}
               className="bg-white h-12 rounded-3xl p-2 w-60 mb-3"
