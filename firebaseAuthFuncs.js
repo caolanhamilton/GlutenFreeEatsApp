@@ -1,6 +1,7 @@
 // import { firebaseConfig } from "../config";
 import firebase from "firebase/compat/app";
 import { Alert } from "react-native";
+import { createUser } from "./api/apiCalls";
 
 export const getIdToken = () => {
   return firebase
@@ -19,13 +20,12 @@ export const login = (
   password,
   setEmail,
   setPassword,
-  setConfirmPassword,
+  setConfirmPassword
 ) => {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then((userInfo) => {
-      Alert.alert("Success", "You are logged in");
+    .then(() => {
       setEmail("");
       setConfirmPassword("");
       setPassword("");
@@ -43,13 +43,33 @@ export const login = (
     });
 };
 
-export const register = (email, password) => {
+export const register = (
+  email,
+  password,
+  firstName,
+  lastName,
+  setEmail,
+  setPassword,
+  setConfirmPassword,
+  setFirstName,
+  setLastName
+) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      Alert.alert("Success", "You are registered!");
+    .then((newUser) => {
+      createUser({
+        email: newUser.user.email,
+        firstName: firstName,
+        lastName: lastName,
+      });
+      setEmail("");
+      setConfirmPassword("");
+      setPassword("");
+      setFirstName("");
+      setLastName("");
     })
+
     .catch((error) => {
       if (error.code === "auth/email-already-in-use") {
         Alert.alert("Sorry", "Email already in use");
