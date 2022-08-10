@@ -5,8 +5,9 @@ const api = axios.create({
   baseURL: "http://192.168.0.15:8080/",
 });
 
+//locations
 
-export const createLocation = ({
+export const createLocation = async ({
   address,
   dedicatedGlutenFree,
   description,
@@ -15,7 +16,6 @@ export const createLocation = ({
   lng,
   name,
   phone,
-  userId,
 }) => {
   const location = {
     name: name,
@@ -27,9 +27,13 @@ export const createLocation = ({
     lng: lng,
     phone: phone,
     categoryId: 3,
-    userId: userId,
   };
-  return api.post(`/locations`, location);
+  const idToken = await getIdToken();
+  return api.post(`/locations`, location, {
+    headers: {
+      Authorization: `Bearer: ${idToken}`,
+    },
+  });
 };
 
 export const getLocations = (
@@ -66,18 +70,25 @@ export const getLocations = (
   });
 };
 
-export const postReview = (reviewObj) => {
-  return api.post(`/reviews`, reviewObj);
+export const postReview = async (reviewObj) => {
+  const idToken = await getIdToken();
+  return api.post(`locations/reviews`, reviewObj, {
+    headers: {
+      Authorization: `Bearer: ${idToken}`,
+    },
+  });
 };
 
-export const getReviewsById = (id) => {
-  return api.get(`/reviews/${id}`);
+export const getReviewsById = (locationId) => {
+  return api.get(`locations/reviews/${locationId}`);
 };
+
+//users
 
 export const addFavourite = async (locationId) => {
   const idToken = await getIdToken();
   return api.post(
-    `/favourites`,
+    `users/favourites`,
     {
       locationId: locationId,
     },
@@ -92,7 +103,7 @@ export const addFavourite = async (locationId) => {
 export const removeFavourite = async (locationId) => {
   const idToken = await getIdToken();
   return api.patch(
-    `/favourites`,
+    `users/favourites`,
     {
       locationId: locationId,
     },
@@ -106,7 +117,7 @@ export const removeFavourite = async (locationId) => {
 
 export const getFavourites = async (lat, long, radius) => {
   const idToken = await getIdToken();
-  return api.get(`/favourites`, {
+  return api.get(`/users/favourites`, {
     headers: {
       Authorization: `Bearer: ${idToken}`,
     },
@@ -116,7 +127,7 @@ export const getFavourites = async (lat, long, radius) => {
       radius: radius,
     },
   });
-}; //sorted by user location
+};
 
 export const getUserDetailsByID = async () => {
   const idToken = await getIdToken();
@@ -125,4 +136,4 @@ export const getUserDetailsByID = async () => {
       Authorization: `Bearer: ${idToken}`,
     },
   });
-}; // users username favourite locations, posted reviews and posted places
+}; 
