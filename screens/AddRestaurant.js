@@ -314,7 +314,6 @@ export default function AddRestaurant() {
                   safetyRating: safetyRating,
                   overallRating: overAllRating,
                   reviewText: reviewText,
-                  userId: user.uid,
                 };
                 postReview(reviewObj);
               });
