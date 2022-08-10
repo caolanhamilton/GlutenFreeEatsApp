@@ -85,6 +85,15 @@ export const getReviewsById = (locationId) => {
 
 //users
 
+export const createUser = async (userObj) => { 
+  const idToken = await getIdToken();
+  return api.post(`/users`, userObj, {
+    headers: {
+      Authorization: `Bearer: ${idToken}`,
+    },
+  });
+}
+
 export const addFavourite = async (locationId) => {
   const idToken = await getIdToken();
   return api.post(
