@@ -13,6 +13,7 @@ export default function FavouriteBtn({ locationId, restaurant }) {
 
   const { user, userFavouritedLocations, setUserFavouritedLocations } =
     useContext(AuthContext);
+  
   const toggleFavourite = () => {
     if (isFavourite) {
       removeFavourite(locationId);
@@ -30,12 +31,12 @@ export default function FavouriteBtn({ locationId, restaurant }) {
 
   useEffect(() => {
     if (
+      userFavouritedLocations &&
       userFavouritedLocations.some((location) => location.id === locationId)
     ) {
-
       setIsFavourite(true);
     }
-  }, []);
+  }, [user]);
 
   return (
     <TouchableOpacity
