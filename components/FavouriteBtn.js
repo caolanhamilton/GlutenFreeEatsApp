@@ -2,29 +2,26 @@ import { TouchableOpacity, Text, Alert } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../Context";
-import {
-  addFavourite,
-  removeFavourite,
-} from "../api/apiCalls";
+import { addFavourite, removeFavourite } from "../api/apiCalls";
 
 export default function FavouriteBtn({ locationId, restaurant }) {
-
   const [isFavourite, setIsFavourite] = useState(false);
 
   const { user, userFavouritedLocations, setUserFavouritedLocations } =
     useContext(AuthContext);
-  
+
   const toggleFavourite = () => {
     if (isFavourite) {
       removeFavourite(locationId);
       setUserFavouritedLocations(
-        [...userFavouritedLocations].filter(
+        [...userFavouritedLocations]?.filter(
           (location) => location.id !== locationId
         )
       );
     } else {
       addFavourite(locationId);
-      setUserFavouritedLocations([...userFavouritedLocations, restaurant]);
+      userFavouritedLocations ?
+        setUserFavouritedLocations([restaurant, ...userFavouritedLocations]) : setUserFavouritedLocations([restaurant]);
     }
     setIsFavourite(!isFavourite);
   };
