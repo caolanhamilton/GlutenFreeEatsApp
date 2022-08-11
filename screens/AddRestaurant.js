@@ -292,7 +292,7 @@ export default function AddRestaurant() {
           </>
         </View>
         <TouchableOpacity
-          className="rounded-full absolute bottom left-4 top-12 p-2 bg-purple-800 drop-shadow-2xl"
+          className="rounded-full absolute bottom left-4 top-12 h-12 w-12 items-center justify-center p-2 bg-purple-800 drop-shadow-2xl"
           onPress={() => {
             navigation.goBack();
           }}
