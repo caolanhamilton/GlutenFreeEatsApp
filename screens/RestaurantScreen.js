@@ -80,7 +80,10 @@ export default function RestaurantScreen(params) {
           <View className="w-1/3 justify-center">
             <View className="self-center">
               <View className="flex-col">
-                <FavouriteBtn locationId={restaurant.id} restaurant={restaurant} />
+                <FavouriteBtn
+                  locationId={restaurant.id}
+                  restaurant={restaurant}
+                />
                 <TouchableOpacity
                   onPress={() => {
                     const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
@@ -152,7 +155,7 @@ export default function RestaurantScreen(params) {
         <View className="self-end flex-row items-center"></View>
 
         <TouchableOpacity
-          className="rounded-full  absolute bottom left-4 top-12 p-2 bg-purple-800"
+          className="rounded-full  absolute bottom left-4 top-12 p-2 h-12 w-12 items-center justify-center bg-purple-800"
           onPress={() => {
             navigation.goBack();
           }}

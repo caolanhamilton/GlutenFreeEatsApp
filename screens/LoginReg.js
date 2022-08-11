@@ -9,6 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AccountInfo from "../components/AccountInfo";
 import { login, register, resetPassword, logout } from "../firebaseAuthFuncs";
 import { getUserDetailsByID } from "../api/apiCalls";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function LoginReg() {
   const { user, setUser, setUserFavouritedLocations } = useContext(AuthContext);
@@ -44,16 +45,21 @@ export default function LoginReg() {
   }, [user]);
 
   return (
-    <SafeAreaView className="bg-white flex-1">
-      <View className="mt-20 ml-10">
-        <Text className="text-4xl pt-1 font-extrabold color-purple-800">
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        backgroundColor: "white",
+        marginTop: 0,
+      }}
+    >
+      <View className="mt-24 ml-10">
+        <Text className="text-5xl pt-4 font-extrabold color-purple-800">
           {user ? "Welcome 👋" : "Account"}
         </Text>
         <Text className="text-2xl font-bold color-gray-500">
           {user ? `${user.email}` : "Register or login to your account"}
         </Text>
       </View>
-
       <View
         className="bg-purple-800 h-full w-full mt-10
   bottom-0 rounded-t-[60px] p-8 pt-20"
@@ -91,6 +97,7 @@ export default function LoginReg() {
               value={password}
               autoCapitalize="none"
               lineHeight={22}
+              secureTextEntry={true}
             ></TextInput>
 
             {!hasAccount && (
@@ -111,6 +118,7 @@ export default function LoginReg() {
                   }}
                   value={confirmPassword}
                   lineHeight={22}
+                  secureTextEntry={true}
                 ></TextInput>
                 <TextInput
                   className={
@@ -173,8 +181,11 @@ export default function LoginReg() {
                   Alert.alert("Password missing", "Please enter a password");
                 } else if (!hasAccount && password !== confirmPassword) {
                   Alert.alert("Passwords do not match", "Please try again");
-                } else if (!hasAccount && (firstName.length === 0 || lastName.length === 0)) {
-                  console.log(hasAccount)
+                } else if (
+                  !hasAccount &&
+                  (firstName.length === 0 || lastName.length === 0)
+                ) {
+                  console.log(hasAccount);
                   Alert.alert("Name missing", "Please enter a name");
                 }
               }}
@@ -210,14 +221,15 @@ export default function LoginReg() {
           </View>
         )}
       </View>
+
       <TouchableOpacity
-        className="rounded-full  absolute bottom left-4 top-12 p-2 bg-purple-800"
+        className="rounded-full h-12 w-12 items-center justify-center absolute bottom left-4 top-12 p-2 bg-purple-800"
         onPress={() => {
           navigation.goBack();
         }}
       >
         <Ionicons name="ios-arrow-back-outline" size={28} color="white" />
       </TouchableOpacity>
-    </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 }
