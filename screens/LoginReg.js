@@ -185,7 +185,6 @@ export default function LoginReg() {
                   !hasAccount &&
                   (firstName.length === 0 || lastName.length === 0)
                 ) {
-                  console.log(hasAccount);
                   Alert.alert("Name missing", "Please enter a name");
                 }
               }}
