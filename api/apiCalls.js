@@ -2,7 +2,7 @@ import axios from "axios";
 import { getIdToken } from "../firebaseAuthFuncs";
 
 const api = axios.create({
-  baseURL: "http://192.168.0.15:8080/",
+  baseURL: "http://192.168.0.15:8080",
 });
 
 //locations
@@ -72,7 +72,7 @@ export const getLocations = (
 
 export const postReview = async (reviewObj) => {
   const idToken = await getIdToken();
-  return api.post(`locations/reviews`, reviewObj, {
+  return api.post(`/locations/reviews`, reviewObj, {
     headers: {
       Authorization: `Bearer: ${idToken}`,
     },
@@ -80,24 +80,33 @@ export const postReview = async (reviewObj) => {
 };
 
 export const getReviewsById = (locationId) => {
-  return api.get(`locations/reviews/${locationId}`);
+  return api.get(`/locations/reviews/${locationId}`);
 };
 
 //users
 
-export const createUser = async (userObj) => { 
+export const createUser = async (userObj) => {
   const idToken = await getIdToken();
   return api.post(`/users`, userObj, {
     headers: {
       Authorization: `Bearer: ${idToken}`,
     },
   });
-}
+};
+
+export const deleteUser = async () => {
+  const idToken = await getIdToken();
+  return api.delete(`/users`, {
+    headers: {
+      Authorization: `Bearer: ${idToken}`,
+    },
+  });
+};
 
 export const addFavourite = async (locationId) => {
   const idToken = await getIdToken();
   return api.post(
-    `users/favourites`,
+    `/users/favourites`,
     {
       locationId: locationId,
     },
@@ -112,7 +121,7 @@ export const addFavourite = async (locationId) => {
 export const removeFavourite = async (locationId) => {
   const idToken = await getIdToken();
   return api.patch(
-    `users/favourites`,
+    `/users/favourites`,
     {
       locationId: locationId,
     },
@@ -145,4 +154,4 @@ export const getUserDetailsByID = async () => {
       Authorization: `Bearer: ${idToken}`,
     },
   });
-}; 
+};
