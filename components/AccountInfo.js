@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, TextInput, Alert } from "react-native";
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../Context";
 import { logout, resetPassword, deleteAccount, changeEmail } from "../firebaseAuthFuncs";
+import { deleteUser } from "../api/apiCalls";
 
 export default function AccountInfo() {
   const { user } = useContext(AuthContext);
@@ -92,7 +93,11 @@ export default function AccountInfo() {
       )}
 
       <TouchableOpacity
-        onPress={deleteAccount}
+        onPress={() => {
+          deleteUser().then(() => {
+            deleteAccount();
+          });
+        }}
         className="bg-purple border-2 border-white h-12 rounded-3xl p-2 w-60 mb-3"
       >
         <Text className="text-center color-white font-semibold text-lg">
