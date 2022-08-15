@@ -22,10 +22,8 @@ export default function AddReviewModal({
   const [overAllRating, setOverallRating] = useState(0);
   const [safetyRating, setSafetyRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
-  const [dedicatedGlutenFree, setDedicatedGlutenFree] = useState(false);
   const [reviewObj, setReviewObj] = useState({});
   const { user, setUser } = useContext(AuthContext);
-
 
   return (
     <View className={"flex-1"}>
@@ -35,7 +33,7 @@ export default function AddReviewModal({
         swipeDirection="down"
         onBackdropPress={() => setModalVisible(false)}
         scrollHorizontal={true}
-        style={{ margin: 0, marginTop: 40 }}
+        style={{ margin: 0, marginTop: 200 }}
         useNativeDriver={false}
         propagateSwipe={true}
       >
@@ -86,38 +84,8 @@ export default function AddReviewModal({
                 )}
               </View>
             </ScrollView>
-            {/* Dedicated gluten free */}
-            <View className="border-2 border-purple-400 mx-2 rounded-xl bg-white px-4 pt-2 m-4 mb-2">
-              <Text className="text-lg font-bold">
-                Is {restaurant.name} dedicated gluten-free?
-              </Text>
-              <View className="flex-row items-center justify-center">
-                <TouchableOpacity
-                  className={`bg-white border-2 border-green-300 p-3 m-2 self-start rounded-3xl ${
-                    dedicatedGlutenFree ? "bg-green-200" : "bg-white"
-                  }`}
-                  onPress={() => {
-                    setDedicatedGlutenFree(true);
-                    setSafetyRating(5);
-                  }}
-                >
-                  <Text>Yes, 100% GF</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  className={`bg-white border-2 border-red-400 p-3 m-2 self-start rounded-3xl ${
-                    !dedicatedGlutenFree ? "bg-red-300" : "bg-white"
-                  }`}
-                  onPress={() => {
-                    setDedicatedGlutenFree(false);
-                    setSafetyRating(0);
-                  }}
-                >
-                  <Text>No, handles gluten</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
             {/* How careful with cross-contamination? */}
-            {!dedicatedGlutenFree && (
+            {!restaurant.dedicatedGlutenFree && (
               <View className=" border-2 border-purple-400 mx-2 rounded-xl bg-white px-4 py-2 m-4 mb-4">
                 <Text className="text-lg font-bold pb-1">
                   How careful is {restaurant.name} in handling cross
@@ -138,8 +106,11 @@ export default function AddReviewModal({
                 className={`bg-white border-2 border-purple-400 p-2 mb-6 w-40 self-center rounded-3xl`}
                 onPress={() => {
                   reviewObj["locationId"] = restaurant.id;
-                  reviewObj["dedicatedGlutenFree"] = dedicatedGlutenFree;
-                  reviewObj["safetyRating"] = safetyRating;
+                  reviewObj["dedicatedGlutenFree"] =
+                    restaurant.dedicatedGlutenFree;
+                  reviewObj["safetyRating"] = restaurant.dedicatedGlutenFree
+                    ? 5
+                    : safetyRating;
                   reviewObj["overallRating"] = overAllRating;
                   reviewObj["reviewText"] = reviewText;
                   reviewObj["userId"] = user.uid;
