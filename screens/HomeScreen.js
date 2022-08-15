@@ -199,7 +199,7 @@ export default function HomeScreen() {
           </View>
         </View>
         {/* Categories */}
-        <Categories></Categories>
+        {/* <Categories></Categories> */}
         {/* Closest Restaurants Rows */}
         <RestaurantsRow
           restaurantList={closeRestaurantList}
