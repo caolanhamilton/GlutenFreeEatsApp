@@ -106,7 +106,7 @@ export default function LoginReg() {
                   autoCapitalize="none"
                   className={
                     "bg-white text-[18px] h-12 w-full rounded-3xl p-2 mb-6" +
-                    (password.length === confirmPassword.length &&
+                    (password === confirmPassword && password.length === confirmPassword.length &&
                     confirmPassword.length > 5
                       ? " bg-green-100"
                       : " bg-red-100") +
