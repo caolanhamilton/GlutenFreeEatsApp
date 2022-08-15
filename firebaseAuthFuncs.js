@@ -1,7 +1,7 @@
 // import { firebaseConfig } from "../config";
 import firebase from "firebase/compat/app";
 import { Alert } from "react-native";
-import { createUser } from "./api/apiCalls";
+
 
 export const getIdToken = () => {
   return firebase
@@ -43,32 +43,14 @@ export const login = (
     });
 };
 
-export const register = (
+export const register = async (
   email,
   password,
-  firstName,
-  lastName,
-  setEmail,
-  setPassword,
-  setConfirmPassword,
-  setFirstName,
-  setLastName
+  
 ) => {
-  firebase
+  return firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
-    .then((newUser) => {
-      createUser({
-        email: newUser.user.email,
-        firstName: firstName,
-        lastName: lastName,
-      });
-      setEmail("");
-      setConfirmPassword("");
-      setPassword("");
-      setFirstName("");
-      setLastName("");
-    })
 
     .catch((error) => {
       if (error.code === "auth/email-already-in-use") {
