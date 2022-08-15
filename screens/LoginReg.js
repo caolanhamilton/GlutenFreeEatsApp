@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import AccountInfo from "../components/AccountInfo";
 import { login, register, resetPassword, logout } from "../firebaseAuthFuncs";
-import { getUserDetailsByID } from "../api/apiCalls";
+import { getUserDetailsByID, createUser } from "../api/apiCalls";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function LoginReg() {
@@ -171,12 +171,20 @@ export default function LoginReg() {
                     password,
                     firstName,
                     lastName,
-                    setEmail,
-                    setPassword,
-                    setConfirmPassword,
-                    setFirstName,
-                    setLastName
-                  );
+                  ).then((newUser) => { 
+                    createUser({
+                      email: newUser.user.email,
+                      firstName: firstName,
+                      lastName: lastName,
+                    }).then(() => { 
+                      setFirstName("");
+                      setLastName("");
+                      setPassword("");
+                      setConfirmPassword("");
+                      setEmail("");
+                    });
+                  })
+          
                 } else if (password.length === 0) {
                   Alert.alert("Password missing", "Please enter a password");
                 } else if (!hasAccount && password !== confirmPassword) {
