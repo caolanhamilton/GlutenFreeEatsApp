@@ -1,19 +1,47 @@
 import { View, Text, TouchableOpacity, TextInput, Alert } from "react-native";
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../Context";
-import { logout, resetPassword, deleteAccount, changeEmail } from "../firebaseAuthFuncs";
+import {
+  logout,
+  resetPassword,
+  deleteAccount,
+  changeEmail,
+} from "../firebaseAuthFuncs";
 import { deleteUser } from "../api/apiCalls";
+import { useNavigation } from "@react-navigation/native";
 
 export default function AccountInfo() {
   const { user } = useContext(AuthContext);
   const [newEmail, setNewEmail] = useState("");
   const [confirmNewEmail, setConfirmNewEmail] = useState("");
   const [newEmailPress, setNewEmailPress] = useState(false);
+  const navigation = useNavigation();
 
   return (
     <View className="flex items-center justify-center">
-      <Text className="text-center color-white font-extrabold text-xl pb-4">
-        Manage your account
+      <Text className="text-center color-white font-extrabold text-xl pb-2">
+        Manage your posts
+      </Text>
+      <View className="self-between gap-x-2 flex-row items-center mb-4">
+        <TouchableOpacity
+          onPress={() => {navigation.navigate("UserLocations")}}
+          className="bg-white border-2 border-white h-12 rounded-3xl p-2 w-1/3 mb-3"
+        >
+          <Text className="text-center color-purple-800 font-semibold text-lg">
+            Reviews
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {navigation.navigate("UserLocations")}}
+          className="bg-white border-2 border-white h-12 rounded-3xl p-2 w-30 mb-3 w-1/3"
+        >
+          <Text className="text-center color-purple-800 font-semibold text-lg">
+            Locations
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <Text className="text-center color-white font-extrabold text-xl pb-2">
+        Account management
       </Text>
       <TouchableOpacity
         onPress={logout}

@@ -70,10 +70,16 @@ export default function VerticalRestaurantsList(params) {
             size={70}
             color={"#9ca3af"}
           />
-          <Text className="text-[20px] pt-5 color-gray-500">
-            Sorry you have no favourites yet, click the heart icon on a
-            restaurant's infomation page to add it to your favourites.
-          </Text>
+          {listTitle === "Favourites" ?
+            <Text className="text-[20px] pt-5 color-gray-500">
+              Sorry you have no favourites yet, click the heart icon on a
+              restaurant's information page to add it to your favourites.
+            </Text> : 
+            <Text className="text-[20px] pt-5 color-gray-500">
+              Sorry there are no restaurants within the set radius. You can try adjusting the search radius or changing the location on the home screen.
+            </Text>
+          }
+  
         </View>
       )}
       <ScrollView

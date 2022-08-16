@@ -12,7 +12,7 @@ import { getUserDetailsByID, createUser } from "../api/apiCalls";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function LoginReg() {
-  const { user, setUser, setUserFavouritedLocations } = useContext(AuthContext);
+  const { user, setUser, setUserPostedReviews, setUserLocations, setUserFavouritedLocations } = useContext(AuthContext);
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +39,10 @@ export default function LoginReg() {
   useEffect(() => {
     if (user) {
       getUserDetailsByID().then(({ data }) => {
+        console.log(data);
         setUserFavouritedLocations(data?.favouritedLocations);
+        setUserLocations(data?.postedLocations);
+        setUserPostedReviews(data?.postedReviews);
       });
     }
   }, [user]);

@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { GOOGLE_MAPS_KEY } from "@env";
-import { MaterialIcons, Entypo, Ionicons } from "@expo/vector-icons";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 export default function RestaurantCardHorizontal({ restaurant }) {
