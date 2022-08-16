@@ -24,7 +24,7 @@ export default function AccountInfo() {
       </Text>
       <View className="self-between gap-x-2 flex-row items-center mb-4">
         <TouchableOpacity
-          onPress={() => {navigation.navigate("UserLocations")}}
+          onPress={() => {navigation.navigate("UserReviews")}}
           className="bg-white border-2 border-white h-12 rounded-3xl p-2 w-1/3 mb-3"
         >
           <Text className="text-center color-purple-800 font-semibold text-lg">
