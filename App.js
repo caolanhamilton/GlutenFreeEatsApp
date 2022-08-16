@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { TailwindProvider } from "tailwindcss-react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
@@ -8,6 +7,7 @@ import HomeScreen from "./screens/HomeScreen";
 import AddRestaurant from "./screens/AddRestaurant";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import VerticalRestaurantsList from "./screens/VerticalRestaurantsListPage";
+import UserLocations from "./screens/UserLocations"; 
 import { AuthContextProvider } from "./Context";
 import LoginReg from "./screens/LoginReg";
 
@@ -34,6 +34,7 @@ export default function App() {
               component={VerticalRestaurantsList}
             ></Stack.Screen>
               <Stack.Screen name="LoginReg" component={LoginReg}></Stack.Screen>
+              <Stack.Screen name="UserLocations" component={UserLocations}></Stack.Screen>
           </Stack.Navigator>
         </TailwindProvider>
       </NavigationContainer>
