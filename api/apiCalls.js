@@ -83,10 +83,14 @@ export const getReviewsById = (locationId) => {
   return api.get(`/locations/reviews/${locationId}`);
 };
 
-export const deleteLocation = (locationId) => { 
-  console.log(locationId)
+export const deleteLocation = (locationId) => {
   return api.delete(`/locations/${locationId}`);
-}
+};
+
+export const deleteReview = (reviewId) => {
+  console.log(reviewId);
+  return api.delete(`/locations/reviews/${reviewId}`);
+};
 
 //users
 

@@ -39,7 +39,6 @@ export default function LoginReg() {
   useEffect(() => {
     if (user) {
       getUserDetailsByID().then(({ data }) => {
-        console.log(data);
         setUserFavouritedLocations(data?.favouritedLocations);
         setUserLocations(data?.postedLocations);
         setUserPostedReviews(data?.postedReviews);
