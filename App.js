@@ -10,6 +10,7 @@ import VerticalRestaurantsList from "./screens/VerticalRestaurantsListPage";
 import UserLocations from "./screens/UserLocations"; 
 import { AuthContextProvider } from "./Context";
 import LoginReg from "./screens/LoginReg";
+import UserReviews from "./screens/UserReviews";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,7 @@ export default function App() {
             ></Stack.Screen>
               <Stack.Screen name="LoginReg" component={LoginReg}></Stack.Screen>
               <Stack.Screen name="UserLocations" component={UserLocations}></Stack.Screen>
+              <Stack.Screen name="UserReviews" component={UserReviews}></Stack.Screen>
           </Stack.Navigator>
         </TailwindProvider>
       </NavigationContainer>
