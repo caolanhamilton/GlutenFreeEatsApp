@@ -1,14 +1,11 @@
 import { View, Text } from "react-native";
 import React from "react";
 import {
-  Ionicons,
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
 
-export default function ReviewCard(params) {
-  const review = params.review;
-
+export default function ReviewCard({ review }) {
   return (
     <View className="bg-gray-200 mx-4 my-1 p-2 rounded-lg">
       <View className="flex-row items-center">
