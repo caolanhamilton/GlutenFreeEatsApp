@@ -8,7 +8,7 @@ import React, { useContext, useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../Context";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { deleteLocation, deleteReview } from "../api/apiCalls";
+import { deleteReview } from "../api/apiCalls";
 
 export default function UserReviews() {
   const { userPostedReviews, setUserPostedReviews } = useContext(AuthContext);
