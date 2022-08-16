@@ -7,7 +7,7 @@ import {
   deleteAccount,
   changeEmail,
 } from "../firebaseAuthFuncs";
-import { deleteUser } from "../api/apiCalls";
+import { deleteUser, updateUserEmail } from "../api/apiCalls";
 import { useNavigation } from "@react-navigation/native";
 
 export default function AccountInfo() {
@@ -89,7 +89,7 @@ export default function AccountInfo() {
           <TextInput
             className={
               "bg-white text-[18px] h-12 w-full rounded-3xl p-2 mb-6" +
-              (newEmail.length === confirmNewEmail.length && newEmail.length > 0
+              (newEmail === confirmNewEmail && newEmail.length > 0
                 ? " bg-green-100"
                 : " bg-red-100") +
               (confirmNewEmail.length === 0 ? "bg-white" : "")
@@ -108,7 +108,10 @@ export default function AccountInfo() {
                 Alert.alert("Error", "Please enter a new email");
               }
               if (newEmail === confirmNewEmail && newEmail.length > 0) {
-                changeEmail(newEmail, setNewEmailPress);
+                changeEmail(newEmail, setNewEmailPress).then((changedEmail) => { 
+                  updateUserEmail(changedEmail)
+                })
+                
               }
             }}
             className="bg-purple border-2 border-white h-12 rounded-3xl p-2 w-60 mb-3"

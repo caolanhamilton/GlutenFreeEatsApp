@@ -112,6 +112,17 @@ export const deleteUser = async () => {
   });
 };
 
+export const updateUserEmail = async (email) => { 
+  const idToken = await getIdToken();
+  return api.patch(`/users/email`, {
+    email: email,
+  }, {
+    headers: {
+      Authorization: `Bearer: ${idToken}`,
+    },
+  });
+}
+
 export const addFavourite = async (locationId) => {
   const idToken = await getIdToken();
   return api.post(
