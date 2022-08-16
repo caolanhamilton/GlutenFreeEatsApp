@@ -83,6 +83,11 @@ export const getReviewsById = (locationId) => {
   return api.get(`/locations/reviews/${locationId}`);
 };
 
+export const deleteLocation = (locationId) => { 
+  console.log(locationId)
+  return api.delete(`/locations/${locationId}`);
+}
+
 //users
 
 export const createUser = async (userObj) => {
