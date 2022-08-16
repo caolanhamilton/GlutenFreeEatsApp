@@ -85,12 +85,13 @@ export const resetPassword = (email) => {
 };
 
 export const changeEmail = (newEmail, setNewEmailPress) => {
-  firebase
+  return firebase
     .auth()
     .currentUser.updateEmail(newEmail)
-    .then(() => {
+    .then((user) => {
       setNewEmailPress(false);
       Alert.alert("Success", "Email changed successfully");
+      return newEmail
     })
     .catch((error) => {
       console.log(error);
