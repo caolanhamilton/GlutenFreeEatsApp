@@ -326,16 +326,17 @@ export default function AddRestaurant() {
         )}
         <Modal animationType={"slide"} transparent={true} visible={modalShow}>
           <View className="mt-80 rounded-t-3xl flex-1 items-center border-solid border-6 justify-center bg-purple-800">
-            <Text className="text-3xl color-white p-1">
+            <Text className="text-3xl color-white font-bold pb-2">
               Thanks for your contribution!
             </Text>
             <Text className="text-xl color-white">
               It's been added to the app 🎉
             </Text>
             <TouchableOpacity
-              className="m-6 bg-white rounded-full p-4"
+              className="m-6 h-28 w-28 items-center justify-center bg-white rounded-full p-4"
               onPress={() => {
                 setModalShow(false);
+                
                 navigation.goBack();
               }}
             >

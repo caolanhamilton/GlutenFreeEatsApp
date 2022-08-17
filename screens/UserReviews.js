@@ -44,17 +44,15 @@ export default function UserReviews() {
         contentContainerStyle={{ paddingBottom: 60 }}
       >
         {userPostedReviews.length === 0 && (
-          <View className="bg-gray-200 mx-4 my-1 p-2 rounded-lg">
-            <View className="flex-row items-center">
-              <MaterialCommunityIcons name="star" size={24} color="#6b21a8" />
-              <Text className="py-1 pr-2">
-                {review.overallRating?.toFixed(1)}
-              </Text>
-              <MaterialIcons name="security" size={20} color="#6b21a8" />
-              <Text>{review.safetyRating?.toFixed(1)}</Text>
-            </View>
-            <Text className="text-[16px]">{review.reviewText}</Text>
-            <Text className="text-right text-xs right-1">by username</Text>
+          <View className="pt-10 p-8 flex items-center justify-center">
+            <MaterialCommunityIcons
+              name="comment-outline"
+              size={70}
+              color={"#9ca3af"}
+            />
+            <Text className="text-[20px] pt-5 color-gray-500">
+              You have not posted any reviews. You can add reviews when viewing a place.
+            </Text>
           </View>
         )}
 

@@ -9,7 +9,7 @@ import {
 import React, { useContext, useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../Context";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { GOOGLE_MAPS_KEY } from "@env";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { deleteLocation } from "../api/apiCalls";

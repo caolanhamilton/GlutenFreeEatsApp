@@ -2,7 +2,7 @@ import axios from "axios";
 import { getIdToken } from "../firebaseAuthFuncs";
 
 const api = axios.create({
-  baseURL: "http://192.168.0.15:8080",
+  baseURL: "https://gf-app.herokuapp.com",
 });
 
 //locations
@@ -96,10 +96,13 @@ export const deleteReview = (reviewId) => {
 
 export const createUser = async (userObj) => {
   const idToken = await getIdToken();
+
   return api.post(`/users`, userObj, {
     headers: {
       Authorization: `Bearer: ${idToken}`,
     },
+  }).catch((err) => { 
+    console.log(err);
   });
 };
 
