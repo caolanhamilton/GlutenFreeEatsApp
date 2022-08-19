@@ -12,7 +12,17 @@ import { getUserDetailsByID, createUser } from "../api/apiCalls";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function LoginReg() {
-  const { user, setUser, setUserPostedReviews, setUserLocations, setUserFavouritedLocations } = useContext(AuthContext);
+  const {
+    user,
+    setUser,
+    setUserPostedReviews,
+    setUserLocations,
+    setUserFavouritedLocations,
+    userFirstName,
+    setUserFirstName,
+    userLastName,
+    setUserLastName,
+  } = useContext(AuthContext);
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +48,9 @@ export default function LoginReg() {
 
   useEffect(() => {
     if (user) {
-      getUserDetailsByID().then(({ data }) => {
+      getUserDetailsByID().then(({ data  }) => {
+        setUserLastName(data.lastName);
+        setUserFirstName(data.firstName);
         setUserFavouritedLocations(data?.favouritedLocations);
         setUserLocations(data?.postedLocations);
         setUserPostedReviews(data?.postedReviews);
@@ -59,12 +71,12 @@ export default function LoginReg() {
           {user ? "Welcome 👋" : "Account"}
         </Text>
         <Text className="text-2xl font-bold color-gray-500">
-          {user ? `${user.email}` : "Register or login to your account"}
+          {user ? `${userFirstName} ${userLastName}` : "Register or login to your account"}
         </Text>
       </View>
       <View
         className="bg-purple-800 h-full w-full mt-10
-  bottom-0 rounded-t-[60px] p-8 pt-20"
+  bottom-0 rounded-t-[46px] p-8 pt-10"
       >
         {user && (
           <AccountInfo
@@ -108,7 +120,8 @@ export default function LoginReg() {
                   autoCapitalize="none"
                   className={
                     "bg-white text-[18px] h-12 w-full rounded-3xl p-2 mb-6" +
-                    (password === confirmPassword && password.length === confirmPassword.length &&
+                    (password === confirmPassword &&
+                    password.length === confirmPassword.length &&
                     confirmPassword.length > 5
                       ? " bg-green-100"
                       : " bg-red-100") +
@@ -168,25 +181,21 @@ export default function LoginReg() {
                   firstName.length !== 0 &&
                   lastName.length !== 0
                 ) {
-                  register(
-                    email,
-                    password,
-                    firstName,
-                    lastName,
-                  ).then((newUser) => { 
-                    createUser({
-                      email: newUser.user.email,
-                      firstName: firstName,
-                      lastName: lastName,
-                    }).then(() => { 
-                      setFirstName("");
-                      setLastName("");
-                      setPassword("");
-                      setConfirmPassword("");
-                      setEmail("");
-                    });
-                  })
-          
+                  register(email, password, firstName, lastName).then(
+                    (newUser) => {
+                      createUser({
+                        email: newUser.user.email,
+                        firstName: firstName,
+                        lastName: lastName,
+                      }).then(() => {
+                        setFirstName("");
+                        setLastName("");
+                        setPassword("");
+                        setConfirmPassword("");
+                        setEmail("");
+                      });
+                    }
+                  );
                 } else if (password.length === 0) {
                   Alert.alert("Password missing", "Please enter a password");
                 } else if (!hasAccount && password !== confirmPassword) {

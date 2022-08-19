@@ -23,7 +23,7 @@ export default function AddReviewModal({
   const [safetyRating, setSafetyRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [reviewObj, setReviewObj] = useState({});
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <View className={"flex-1"}>
@@ -114,9 +114,10 @@ export default function AddReviewModal({
                   reviewObj["overallRating"] = overAllRating;
                   reviewObj["reviewText"] = reviewText;
                   reviewObj["userId"] = user.uid;
-                  postReview(reviewObj).then((res) => {});
-                  setReviews([...reviews, reviewObj]);
-                  setModalVisible(false);
+                  postReview(reviewObj).then(() => { 
+                    setReviews([...reviews, reviewObj]);
+                    setModalVisible(false);
+                  })
                 }}
               >
                 <Text className="font-bold text-base text-center">Post</Text>
