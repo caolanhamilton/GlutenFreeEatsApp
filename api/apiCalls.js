@@ -88,7 +88,6 @@ export const deleteLocation = (locationId) => {
 };
 
 export const deleteReview = (reviewId) => {
-  console.log(reviewId);
   return api.delete(`/locations/reviews/${reviewId}`);
 };
 

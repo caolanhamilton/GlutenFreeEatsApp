@@ -1,29 +1,25 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
-import {
-  useNavigation,
-  useIsFocused,
-} from "@react-navigation/native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import RestaurantCardHorizontal from "../components/RestaurantCardHorizontal";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getFavourites } from "../api/apiCalls";
 
-
-export default function VerticalRestaurantsList(params) {
-  const listTitle = params.route.params.listTitle;
-  const listSubtitle = params.route.params.listSubtitle;
-  const lat = params.route.params.lat;
-  const long = params.route.params.long;
-  const radius = params.route.params.radius;
-  const [restaurantList, setRestaurantList] = useState(
-    params.route.params.restaurantList
-  );
+export default function VerticalRestaurantsList({
+  route: {
+    params: {
+      listSubtitle,
+      listTitle,
+      lat,
+      long,
+      radius,
+      passedRestaurantList,
+    },
+  },
+}) {
+  const [restaurantList, setRestaurantList] = useState(passedRestaurantList);
 
   const navigation = useNavigation();
 
@@ -70,16 +66,18 @@ export default function VerticalRestaurantsList(params) {
             size={70}
             color={"#9ca3af"}
           />
-          {listTitle === "Favourites" ?
+          {listTitle === "Favourites" ? (
             <Text className="text-[20px] pt-5 color-gray-500">
               Sorry you have no favourites yet, click the heart icon on a
               restaurant's information page to add it to your favourites.
-            </Text> : 
-            <Text className="text-[20px] pt-5 color-gray-500">
-              Sorry there are no restaurants within the set radius. You can try adjusting the search radius or changing the location on the home screen.
             </Text>
-          }
-  
+          ) : (
+            <Text className="text-[20px] pt-5 color-gray-500">
+              Sorry there are no restaurants within the set radius. You can try
+              adjusting the search radius or changing the location on the home
+              screen.
+            </Text>
+          )}
         </View>
       )}
       <ScrollView

@@ -16,7 +16,7 @@ export default function RestaurantsRow({
         className="mt-4 flex-row items-center justify-between px-4"
         onPress={() => {
           navigation.navigate("VerticalRestaurants", {
-            restaurantList,
+            passedRestaurantList: restaurantList,
             listTitle,
             listSubtitle,
           });

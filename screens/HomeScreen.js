@@ -27,7 +27,7 @@ export default function HomeScreen() {
   const [locationBtnClicked, setLocationBtnClicked] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
   const [radius, setRadius] = useState(100);
-  const { user } = useContext(AuthContext);
+  const { user, userLocations } = useContext(AuthContext);
 
   Location.setGoogleApiKey(GOOGLE_MAPS_KEY);
 
@@ -92,7 +92,7 @@ export default function HomeScreen() {
     ).then((response) => {
       setDedicatedRestaurantList(response.data);
     });
-  }, [location, radius]);
+  }, [location, radius, userLocations]);
 
   return (
     <SafeAreaView className="bg-white">
@@ -119,7 +119,7 @@ export default function HomeScreen() {
             onPress={() => {
               if (user) {
                 navigation.navigate("VerticalRestaurants", {
-                  restaurantList: false,
+                  passedRestaurantList: false,
                   listTitle: "Favourites",
                   listSubtitle: "Spots you've saved",
                   lat: location.coords.latitude,
