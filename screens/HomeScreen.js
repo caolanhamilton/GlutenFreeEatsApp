@@ -10,7 +10,7 @@ import { getLocations } from "../api/apiCalls";
 import * as Location from "expo-location";
 import { GOOGLE_MAPS_KEY } from "@env";
 import RadiusModal from "./RadiusModal";
-import { AuthContext, LocationsContext } from "../Context";
+import { AuthContext } from "../Context";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
