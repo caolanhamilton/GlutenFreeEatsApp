@@ -180,7 +180,9 @@ export default function RestaurantScreen(params) {
                   ,
                   {
                     text: "Login or create account",
-                    onPress: () => console.log("Log in or create"),
+                    onPress: () => {
+                      navigation.navigate("LoginReg");
+                    },
                   },
                   { text: "Maybe later" },
                 ]

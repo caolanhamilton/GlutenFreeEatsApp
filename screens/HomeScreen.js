@@ -5,7 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 import GooglePlacesSearch from "../components/GooglePlacesSearch";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
-import Categories from "../components/Categories";
 import RestaurantsRow from "../components/HorizontalRestaurantRow.js";
 import { getLocations } from "../api/apiCalls";
 import * as Location from "expo-location";
@@ -135,7 +134,9 @@ export default function HomeScreen() {
                     ,
                     {
                       text: "Login or create account",
-                      onPress: () => console.log("Log in or create"),
+                      onPress: () => {
+                        navigation.navigate("LoginReg");
+                      }
                     },
                     { text: "Maybe later" },
                   ]
@@ -241,7 +242,9 @@ export default function HomeScreen() {
                 ,
                 {
                   text: "Login or create account",
-                  onPress: () => console.log("Log in or create"),
+                  onPress: () => {
+                    navigation.navigate("LoginReg");
+                  },
                 },
                 { text: "Maybe later" },
               ]
