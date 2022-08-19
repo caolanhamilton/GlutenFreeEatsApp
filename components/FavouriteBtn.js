@@ -3,9 +3,11 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../Context";
 import { addFavourite, removeFavourite } from "../api/apiCalls";
+import { useNavigation } from "@react-navigation/native";
 
 export default function FavouriteBtn({ locationId, restaurant }) {
   const [isFavourite, setIsFavourite] = useState(false);
+  const navigation = useNavigation(); 
 
   const { user, userFavouritedLocations, setUserFavouritedLocations } =
     useContext(AuthContext);
@@ -48,7 +50,9 @@ export default function FavouriteBtn({ locationId, restaurant }) {
               ,
               {
                 text: "Login or create account",
-                onPress: () => console.log("Log in or create"),
+                onPress: () => {
+                  navigation.navigate("LoginReg");
+                },
               },
               { text: "Maybe later" },
             ]
