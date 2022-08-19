@@ -19,7 +19,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { createLocation, postReview } from "../api/apiCalls";
 import { AuthContext } from "../Context";
 
-export default function AddRestaurant() {
+export default function AddRestaurant({}) {
   const navigation = useNavigation();
   const [selectedGooglePlace, setSelectedGooglePlace] = useState(null);
   const [overAllRating, setOverallRating] = useState(0);
@@ -29,7 +29,7 @@ export default function AddRestaurant() {
   const [dedicatedGlutenFree, setDedicatedGlutenFree] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [modalShow, setModalShow] = useState(false);
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUserLocations, userLocations } = useContext(AuthContext);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -315,7 +315,9 @@ export default function AddRestaurant() {
                   overallRating: overAllRating,
                   reviewText: reviewText,
                 };
-                postReview(reviewObj);
+                postReview(reviewObj).then(() => {
+                  setUserLocations([...userLocations, selectedGooglePlace]);
+                });
               });
             }}
           >
@@ -336,7 +338,7 @@ export default function AddRestaurant() {
               className="m-6 h-28 w-28 items-center justify-center bg-white rounded-full p-4"
               onPress={() => {
                 setModalShow(false);
-                
+
                 navigation.goBack();
               }}
             >
