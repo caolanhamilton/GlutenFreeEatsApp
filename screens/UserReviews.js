@@ -51,14 +51,25 @@ export default function UserReviews() {
               color={"#9ca3af"}
             />
             <Text className="text-[20px] pt-5 color-gray-500">
-              You have not posted any reviews. You can add reviews when viewing a place.
+              You have not posted any reviews. You can add reviews when viewing
+              a place.
             </Text>
           </View>
         )}
 
         {userPostedReviews.map((review, index) => {
           return (
-            <View key={index} className="bg-gray-200 mx-4 my-1 p-2 rounded-lg">
+            <View
+              key={index}
+              className="bg-gray-200 mx-4 my-1 p-2 rounded-lg"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 0.2,
+                shadowRadius: 1,
+                elevation: 1,
+              }}
+          >
               <View className="flex-row items-center">
                 <View className="flex flex-1 flex-row items-center w-1/3">
                   <MaterialCommunityIcons

@@ -13,7 +13,7 @@ export default function RestaurantsRow({
   return (
     <View>
       <TouchableOpacity
-        className="mt-4 flex-row items-center justify-between px-4"
+        className="mt-2 flex-row items-center justify-between px-4"
         onPress={() => {
           navigation.navigate("VerticalRestaurants", {
             passedRestaurantList: restaurantList,
