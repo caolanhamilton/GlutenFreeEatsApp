@@ -41,94 +41,113 @@ export default function AddRestaurant({}) {
     <KeyboardAwareScrollView
       keyboardShouldPersistTaps={"handled"}
       listViewDisplayed={false}
+      contentContainerStyle={{ backgroundColor: "white", flex: 1 }}
     >
       <ScrollView
         keyboardShouldPersistTaps={"handled"}
         listViewDisplayed={false}
+        contentContainerStyle={{ backgroundColor: "white" }}
       >
-        <TouchableOpacity className="bg-purple-200 h-60">
+        <View className="h-60">
           {!selectedGooglePlace ? (
-            <View className="flex justify-center items-center h-full">
-              <MaterialIcons
-                name="photo"
-                size={80}
-                color="black"
-              />
-              <Text className="text-lg">A photo of the location will appear here</Text>
+            <View className="flex justify-end pb-2 pl-2 h-full">
+              <View className="items-center pr-2">
+                <MaterialIcons
+                  name="add-location-alt"
+                  size={80}
+                  color="#6b21a8"
+                />
+              </View>
+              <Text className="text-3xl font-bold mt-2 ml-4 pt-2 color-purple-800">
+                Add a gluten-free spot
+              </Text>
+              <Text className="text-l font-bold ml-4 color-gray-500 mb-2">
+                Type the name of a cafe or restaurant
+              </Text>
             </View>
           ) : (
-            <Image
-              className="h-60 w-full"
-              source={{
-                uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=${selectedGooglePlace.image}&key=${GOOGLE_MAPS_KEY}`,
-              }}
-            ></Image>
+            <View className="bg-purple-200 h-60">
+              <Image
+                className="h-60 w-full"
+                source={{
+                  uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photo_reference=${selectedGooglePlace.image}&key=${GOOGLE_MAPS_KEY}`,
+                }}
+              ></Image>
+            </View>
           )}
-        </TouchableOpacity>
+        </View>
         <View>
-          <Text className="text-xl font-bold mt-2 ml-4 pt-2 color-purple-800">
-            Search location name
-          </Text>
-          <View className="w-full px-2 self-center py-2">
-            <GooglePlacesAutocomplete
-              className="h1 w1"
-              placeholder="Search for a restaurant or cafe"
-              fetchDetails={true}
-              query={{
-                key: GOOGLE_MAPS_KEY,
-                language: "en",
-                components: "country:gb",
-                types: "food|bar|cafe|restaurant|bakery",
-              }}
-              onPress={(data, details = null) => {
-                setSelectedGooglePlace({
-                  name: details.name,
-                  address: details.formatted_address,
-                  lat: details.geometry.location.lat,
-                  lng: details.geometry.location.lng,
-                  phone: details.international_phone_number,
-                  image: details.photos[0].photo_reference,
-                });
-              }}
-              styles={{
-                textInputContainer: {
-                  marginBottom: 0,
-                  borderRadius: 10,
-                  width: "100%",
-                  alignSelf: "center",
-                },
-                listView: {
-                  alignSelf: "center",
-                  borderRadius: 15,
-                  width: "100%",
-                  backgroundColor: "white",
-                },
-                row: {
-                  backgroundColor: "white",
-                  width: "100%",
-                },
-                poweredContainer: {
-                  backgroundColor: "white",
-                },
-                textInput: {
-                  height: 45,
-                  borderRadius: 40,
-                  color: "#5d5d5d",
-                  fontSize: 16,
-                  backgroundColor: "white",
-                },
-              }}
-            ></GooglePlacesAutocomplete>
+          <View className="flex-row w-full px-2 mr-2 self-center py-2">
+            <View className="justify-center h-11">
+              <MaterialIcons
+                name="search"
+                size={30}
+                color="#6b21a8"
+              ></MaterialIcons>
+            </View>
+            <View className="flex-1 pr-6">
+              <GooglePlacesAutocomplete
+                className="h1 w1"
+                placeholder="Search for a restaurant or cafe"
+                fetchDetails={true}
+                query={{
+                  key: GOOGLE_MAPS_KEY,
+                  language: "en",
+                  components: "country:gb",
+                  types: "food|bar|cafe|restaurant|bakery",
+                }}
+                onPress={(data, details = null) => {
+                  setSelectedGooglePlace({
+                    name: details.name,
+                    address: details.formatted_address,
+                    lat: details.geometry.location.lat,
+                    lng: details.geometry.location.lng,
+                    phone: details.international_phone_number,
+                    image: details.photos[0].photo_reference,
+                  });
+                }}
+                styles={{
+                  textInputContainer: {
+                    marginBottom: 0,
+                    borderRadius: 10,
+                    width: "100%",
+                    alignSelf: "center",
+                  },
+                  listView: {
+                    alignSelf: "center",
+                    borderRadius: 15,
+                    width: "100%",
+                    backgroundColor: "#fafafa",
+                  },
+                  row: {
+                    backgroundColor: "#fafafa",
+                  },
+                  poweredContainer: {
+                    backgroundColor: "#fafafa",
+                  },
+                  textInput: {
+                    height: 45,
+                    borderRadius: 40,
+                    color: "#6b7280",
+                    fontSize: 16,
+                    backgroundColor: "#fafafa",
+                  },
+                }}
+              ></GooglePlacesAutocomplete>
+            </View>
           </View>
           <>
             {/* Location basic info */}
             {selectedGooglePlace && (
-              <View className="mx-2 rounded-xl bg-white p-2 m-2">
-                <Text className="text-lg font-semibold">
+              <View className="mx-4 rounded-xl p-2 my-2 bg-gray-50">
+                <Text className="text-2xl text-purple-800 font-semibold">
                   {selectedGooglePlace.name}
                 </Text>
                 <Text className="text-lg">{selectedGooglePlace.address}</Text>
-                <Text className="text-lg">{selectedGooglePlace.phone}</Text>
+                {selectedGooglePlace.phone && (
+                  <Text className="text-lg">{selectedGooglePlace.phone}</Text>
+                )}
+
                 <View className="self-end flex-row items-center">
                   <TouchableOpacity
                     className={`border-solid border-2 border-green-300 ${
@@ -145,17 +164,17 @@ export default function AddRestaurant({}) {
                   >
                     <Text>{addressConfirmed ? "Change" : "Confirm"}</Text>
                   </TouchableOpacity>
-                  <View className="">
+                  <View className="mx-1">
                     {addressConfirmed ? (
                       <Ionicons
                         name="checkmark-circle-sharp"
-                        size={24}
+                        size={30}
                         color="#86efac"
                       />
                     ) : (
                       <Entypo
                         name="circle-with-cross"
-                        size={24}
+                        size={30}
                         color="#f87171"
                       />
                     )}
@@ -167,32 +186,32 @@ export default function AddRestaurant({}) {
             {/* Add description of this location */}
             {addressConfirmed && (
               <View>
-                <View className="mx-2 rounded-xl bg-white p-2 m-2">
+                <View className="mx-4 rounded-xl bg-google p-2 my-2 bg-gray-50">
                   <Text className="text-lg font-semibold">
                     Add a description of {selectedGooglePlace.name}
                   </Text>
                   <TextInput
-                    className="bg-gray-50 m-1 p-2 rounded-xl"
+                    className="bg-white m-1 mx-2 p-2 rounded-xl"
                     multiline={true}
                     fontSize={16}
                     onChangeText={(text) => setDescription(text)}
                   ></TextInput>
-                  <View className="self-end flex-row items-center">
+                  <View className="self-end flex-row items-center mx-1">
                     {description.length < 20 && (
                       <Text className="self-center color-gray-400 p-1">
                         {20 - description.length} more characters
                       </Text>
                     )}
-                    {description.length > 20 ? (
+                    {description.length >= 20 ? (
                       <Ionicons
                         name="checkmark-circle-sharp"
-                        size={24}
+                        size={30}
                         color="#86efac"
                       />
                     ) : (
                       <Entypo
                         name="circle-with-cross"
-                        size={24}
+                        size={30}
                         color="#f87171"
                       />
                     )}
@@ -200,7 +219,7 @@ export default function AddRestaurant({}) {
                 </View>
 
                 {/* Review */}
-                <View className="mx-2 rounded-xl bg-white p-2 m-2">
+                <View className="mx-4 rounded-xl  bg-gray-50 p-2 my-2">
                   <Text className="text-lg font-semibold mb-1">
                     Leave a review of {selectedGooglePlace.name}
                   </Text>
@@ -212,28 +231,28 @@ export default function AddRestaurant({}) {
                     starStyle={{}}
                   ></StarRating>
                   <TextInput
-                    className="bg-gray-50 m-1 p-2 rounded-xl"
+                    className="bg-white m-1 mx-2 p-2 rounded-xl"
                     multiline={true}
                     fontSize={16}
                     onChangeText={(text) => setReviewText(text)}
                     placeholder="Describe your experience"
                   ></TextInput>
-                  <View className="self-end flex-row items-center">
+                  <View className="self-end flex-row items-center mx-1">
                     {reviewText.length < 20 && (
                       <Text className="self-center color-gray-400 p-1">
                         {20 - reviewText.length} more characters
                       </Text>
                     )}
-                    {reviewText.length > 20 ? (
+                    {reviewText.length >= 20 ? (
                       <Ionicons
                         name="checkmark-circle-sharp"
-                        size={24}
+                        size={30}
                         color="#86efac"
                       />
                     ) : (
                       <Entypo
                         name="circle-with-cross"
-                        size={24}
+                        size={30}
                         color="#f87171"
                       />
                     )}
@@ -241,14 +260,14 @@ export default function AddRestaurant({}) {
                 </View>
 
                 {/* Dedicated gluten free */}
-                <View className="mx-2 rounded-xl bg-white p-2 m-2">
+                <View className="mx-4 rounded-xl  bg-gray-50 p-2 my-2">
                   <Text className="text-lg font-semibold">
                     Is {selectedGooglePlace.name} dedicated gluten-free?
                   </Text>
                   <View className="flex-row">
                     <TouchableOpacity
                       className={`bg-white border-2 border-green-300 p-3 m-1 self-start rounded-3xl ${
-                        dedicatedGlutenFree ? "bg-green-200" : "bg-white"
+                        dedicatedGlutenFree ? "bg-green-200" : " bg-gray-50"
                       }`}
                       onPress={() => {
                         setDedicatedGlutenFree(true);
@@ -273,7 +292,7 @@ export default function AddRestaurant({}) {
 
                 {/* How careful with cross-contamination? */}
                 {!dedicatedGlutenFree && (
-                  <View className="mx-2 rounded-xl bg-white p-2 m-2 mb-6">
+                  <View className="mx-4 rounded-xl bg-gray-50 p-2 my-2 mb-6">
                     <Text className="text-lg font-semibold">
                       How careful is {selectedGooglePlace.name} in handling
                       cross contamination?

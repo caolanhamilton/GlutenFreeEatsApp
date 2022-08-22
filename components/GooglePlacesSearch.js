@@ -37,8 +37,9 @@ export default function GooglePlacesSearch({
         },
         listView: {
           alignSelf: "center",
+          marginLeft: "12%",
           borderRadius: 15,
-          width: "100%",
+          width: "120%",
           backgroundColor: "#fafafa",
         },
         row: {
