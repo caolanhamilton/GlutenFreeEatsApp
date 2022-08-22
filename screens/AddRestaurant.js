@@ -50,11 +50,11 @@ export default function AddRestaurant({}) {
           {!selectedGooglePlace ? (
             <View className="flex justify-center items-center h-full">
               <MaterialIcons
-                name="add-photo-alternate"
+                name="photo"
                 size={80}
                 color="black"
               />
-              <Text className="text-lg">Add photos of this location</Text>
+              <Text className="text-lg">A photo of the location will appear here</Text>
             </View>
           ) : (
             <Image
