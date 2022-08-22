@@ -3,12 +3,17 @@ import React from "react";
 import RestaurantCard from "./RestaurantCard";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { MotiView } from "moti";
+import { Skeleton } from "moti/skeleton";
 export default function RestaurantsRow({
   restaurantList,
   listTitle,
   listSubtitle,
+  listLoading,
+  setListLoading,
 }) {
   const navigation = useNavigation();
+  const Spacer = ({ height = 8 }) => <MotiView style={{ height }} />;
 
   return (
     <View>
@@ -35,9 +40,45 @@ export default function RestaurantsRow({
           paddingBottom: 20,
         }}
       >
-        {restaurantList.map((restaurant) => {
-          return <RestaurantCard restaurant={restaurant} key={restaurant.id} />;
-        })}
+        {listLoading ? (
+          <>
+            {Array.apply(null, { length: 2 }).map((e, index) => (
+              <View className="pr-2 w-72" key={index}>
+                <Skeleton
+                  show={true}
+                  colors={["#f3e8ff", "#e9d5ff", "#faf5ff"]}
+                >
+                  <View className="h-56 rounded"></View>
+                </Skeleton>
+                <Spacer height={4}></Spacer>
+                <Skeleton
+                  show={true}
+                  width="70%"
+                  height={20}
+                  colors={["#f3e8ff", "#e9d5ff", "#faf5ff"]}
+                ></Skeleton>
+                <Spacer height={4}></Spacer>
+                <Skeleton
+                  show={true}
+                  width="60%"
+                  height={20}
+                  colors={["#f3e8ff", "#e9d5ff", "#faf5ff"]}
+                ></Skeleton>
+              </View>
+            ))}
+          </>
+        ) : (
+          restaurantList.map((restaurant) => {
+            return (
+              <RestaurantCard
+                restaurant={restaurant}
+                key={restaurant.id}
+                listLoading={listLoading}
+                setListLoading={setListLoading}
+              />
+            );
+          })
+        )}
       </ScrollView>
     </View>
   );

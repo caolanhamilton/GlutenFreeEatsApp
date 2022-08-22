@@ -10,6 +10,7 @@ import AccountInfo from "../components/AccountInfo";
 import { login, register, resetPassword, logout } from "../firebaseAuthFuncs";
 import { getUserDetailsByID, createUser } from "../api/apiCalls";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Skeleton } from "moti/skeleton";
 
 export default function LoginReg() {
   const {
@@ -70,9 +71,18 @@ export default function LoginReg() {
         <Text className="text-5xl pt-4 font-extrabold color-purple-800">
           {user ? "Welcome 👋" : "Account"}
         </Text>
-        <Text className="text-2xl font-bold color-gray-500">
-          {user ? `${userFirstName} ${userLastName}` : "Register or login to your account"}
-        </Text>
+        <Skeleton
+          show={user && userFirstName.length === 0}
+          colorMode="light"
+          width={"60%"}
+    
+        >
+          <Text className="text-2xl font-bold color-gray-500">
+            {user
+              ? `${userFirstName} ${userLastName}`
+              : "Register or login to your account"}
+          </Text>
+        </Skeleton>
       </View>
       <View
         className="bg-purple-800 h-full w-full mt-10

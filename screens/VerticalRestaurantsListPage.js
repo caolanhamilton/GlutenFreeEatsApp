@@ -6,6 +6,8 @@ import RestaurantCardHorizontal from "../components/RestaurantCardHorizontal";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getFavourites } from "../api/apiCalls";
+import { MotiView } from "moti";
+import { Skeleton } from "moti/skeleton";
 
 export default function VerticalRestaurantsList({
   route: {
@@ -20,7 +22,9 @@ export default function VerticalRestaurantsList({
   },
 }) {
   const [restaurantList, setRestaurantList] = useState(passedRestaurantList);
-
+  const [loadingFavs, setLoadingFavs] = useState(true);
+  const Spacer = ({ height = 8 }) =>
+  <MotiView style={{ height }} />;
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
@@ -33,6 +37,7 @@ export default function VerticalRestaurantsList({
     if (listTitle === "Favourites") {
       getFavourites(lat, long, radius).then(({ data }) => {
         setRestaurantList(data);
+        setLoadingFavs(false);
       });
     }
   }, [navigation.isFocused()]);
@@ -84,6 +89,35 @@ export default function VerticalRestaurantsList({
         className="bg-white"
         contentContainerStyle={{ paddingBottom: 66 }}
       >
+        {listTitle === "Favourites" && loadingFavs && (
+          <View className="mt-2 mx-2 mb-2 ">
+            {Array.apply(null, { length: 3 }).map((e, index) => (
+              <View className="mb-2" key={index}>
+                <Skeleton
+                  show={true}
+                  colors={["#f3e8ff", "#e9d5ff", "#faf5ff"]}
+                >
+                  <View className="h-60 w-screen rounded-t-xl"></View>
+                </Skeleton>
+                <Spacer height={8}></Spacer>
+                <Skeleton
+                  show={true}
+                  width="70%"
+                  height={20}
+                  colors={["#f3e8ff", "#e9d5ff", "#faf5ff"]}
+                ></Skeleton>
+                <Spacer height={4}></Spacer>
+                <Skeleton
+                  show={true}
+                  width="60%"
+                  height={20}
+                  colors={["#f3e8ff", "#e9d5ff", "#faf5ff"]}
+                ></Skeleton>
+              </View>
+            ))}
+          </View>
+        )}
+
         {restaurantList?.length > 0 &&
           restaurantList.map((restaurant) => {
             return (
