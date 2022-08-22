@@ -136,7 +136,7 @@ export default function HomeScreen() {
                       text: "Login or create account",
                       onPress: () => {
                         navigation.navigate("LoginReg");
-                      }
+                      },
                     },
                     { text: "Maybe later" },
                   ]
@@ -159,7 +159,7 @@ export default function HomeScreen() {
 
       <ScrollView
         keyboardShouldPersistTaps="always"
-        contentContainerStyle={{ paddingBottom: 60 }}
+        contentContainerStyle={{ paddingBottom: 80 }}
       >
         {/* SearchBar */}
         <View className="flex-row items-center space-x-2 pb-2 px-3">
@@ -228,9 +228,16 @@ export default function HomeScreen() {
       </ScrollView>
       <TouchableOpacity
         className={
-          "absolute bottom-36 right-4 bg rounded-full p-2 drop-shadow-2xl" +
+          "absolute bottom-24 right-4 bg rounded-full p-2 drop-shadow-2xl" +
           (user ? " bg-purple-800" : " bg-gray-400")
         }
+        style={{
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: 0.8,
+          shadowRadius: 2,
+          elevation: 7,
+        }}
         onPress={() => {
           if (user) {
             navigation.navigate("AddRestaurant");
