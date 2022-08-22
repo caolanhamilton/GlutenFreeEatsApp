@@ -51,7 +51,7 @@ export default function RestaurantScreen(params) {
         {/* Address & nav/fav button */}
         <View className="flex-row w-full">
           <View className="w-2/3">
-            <Text className="text-xl font-bold mt-2 ml-4 pt-2 color-purple-800">
+            <Text className="text-3xl font-extrabold mt-2 ml-4 pt-2 color-purple-800">
               {restaurant.name}
             </Text>
             {/* Address */}
@@ -104,7 +104,19 @@ export default function RestaurantScreen(params) {
           </View>
         </View>
         {/* Features */}
-        <View className="bg-purple-800 h-15.5 rounded-md m-2 flex-row flex-wrap items-center justify-center">
+        <View
+          className="bg-purple-800 h-15.5 rounded-md m-2 flex-row flex-wrap items-center justify-center pb-4"
+          style={{
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: 0.5,
+            shadowRadius: 1,
+            elevation: 5,
+          }}
+        >
+          <Text className="text-xl text-white  italic py-2 px-3">
+            {restaurant.description}
+          </Text>
           <View className="flex-row pl-2 items-center">
             <MaterialCommunityIcons name="star" size={24} color="white" />
             <Text className="color-white text-base font-bold pr-4">
@@ -159,6 +171,13 @@ export default function RestaurantScreen(params) {
           onPress={() => {
             navigation.goBack();
           }}
+          style={{
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: 0.8,
+            shadowRadius: 4,
+            elevation: 6,
+          }}
         >
           <Ionicons name="ios-arrow-back-outline" size={28} color="white" />
         </TouchableOpacity>
@@ -166,9 +185,16 @@ export default function RestaurantScreen(params) {
       <View>
         <TouchableOpacity
           className={
-            "absolute bottom-4 right-4 bg rounded-full p-2 drop-shadow-2xl" +
+            "absolute bottom-4 right-4 bg rounded-full p-3 drop-shadow-2xl" +
             (user ? " bg-purple-800" : " bg-gray-400")
           }
+          style={{
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: 0.8,
+            shadowRadius: 4,
+            elevation: 6,
+          }}
           onPress={() => {
             if (user) {
               setModalVisible(true);
@@ -190,7 +216,7 @@ export default function RestaurantScreen(params) {
             }
           }}
         >
-          <MaterialIcons name="add-comment" size={36} color="white" />
+          <MaterialIcons name="add-comment" size={32} color="white" />
         </TouchableOpacity>
       </View>
       <AddReviewModal
