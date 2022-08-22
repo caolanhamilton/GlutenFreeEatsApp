@@ -20,14 +20,18 @@ import ReviewCard from "../components/ReviewCard";
 import AddReviewModal from "./AddReviewModal";
 import FavouriteBtn from "../components/FavouriteBtn";
 import { AuthContext } from "../Context";
+import { Skeleton } from "moti/skeleton";
+import { MotiView } from "moti";
 
 export default function RestaurantScreen(params) {
   const restaurant = params.route.params.restaurant;
   const navigation = useNavigation();
   const [reviews, setReviews] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
   const { user } = useContext(AuthContext);
-  
+  const Spacer = ({ height = 8 }) => <MotiView style={{ height }} />;
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -37,6 +41,7 @@ export default function RestaurantScreen(params) {
   useEffect(() => {
     getReviewsById(restaurant.id).then((response) => {
       setReviews(response.data);
+      setReviewsLoading(false);
     });
   }, []);
   return (
@@ -159,9 +164,25 @@ export default function RestaurantScreen(params) {
           <Text className="text-xl font-semibold mt-2 ml-4 pt-2 color-purple-800">
             Reviews
           </Text>
-          {reviews.map((review) => (
-            <ReviewCard key={review.id} review={review} />
-          ))}
+          {reviewsLoading ? (
+            <View className="m-4 rounded-lg">
+              {Array.apply(null, { length: 3 }).map((e, index) => (
+                <View key={index}>
+                  <Skeleton
+                    show={true}
+                    colors={["#f3e8ff", "#e9d5ff", "#faf5ff"]}
+                    height={80}
+                    width={"100%"}
+                  ></Skeleton>
+                  <Spacer height={8}></Spacer>
+                </View>
+              ))}
+            </View>
+          ) : (
+            reviews.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))
+          )}
         </View>
 
         <View className="self-end flex-row items-center"></View>
