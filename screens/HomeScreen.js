@@ -12,6 +12,9 @@ import { GOOGLE_MAPS_KEY } from "@env";
 import RadiusModal from "./RadiusModal";
 import { AuthContext } from "../Context";
 
+
+
+
 export default function HomeScreen() {
   const navigation = useNavigation();
   const [closeRestaurantList, setCloseRestaurantList] = useState([]);
@@ -27,7 +30,10 @@ export default function HomeScreen() {
   const [locationBtnClicked, setLocationBtnClicked] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
   const [radius, setRadius] = useState(100);
+  const [locationsLoading, setLocationsLoading] = useState(true);
+  const [dedicatedGfLoading, setDedicatedGfLoading] = useState(true);
   const { user, userLocations } = useContext(AuthContext);
+
 
   Location.setGoogleApiKey(GOOGLE_MAPS_KEY);
 
@@ -83,6 +89,7 @@ export default function HomeScreen() {
       setTopReviewsList(
         [...response.data].sort((a, b) => b.avgRating - a.avgRating)
       );
+      setLocationsLoading(false);
     });
     getLocations(
       { lat: location.coords.latitude, lng: location.coords.longitude },
@@ -91,6 +98,7 @@ export default function HomeScreen() {
       radius
     ).then((response) => {
       setDedicatedRestaurantList(response.data);
+      setDedicatedGfLoading(false);
     });
   }, [location, radius, userLocations]);
 
@@ -163,18 +171,20 @@ export default function HomeScreen() {
       >
         {/* SearchBar */}
         <View className="flex-row items-center space-x-2 pb-2 px-3">
-          <View className="flex-row space-x-0 flex-1 flex items-center justify-center">
-            <MaterialCommunityIcons
-              name="magnify"
-              size={30}
-              color="#6b21a8"
-              padding={10}
-            />
+          <View className="flex-row space-x-0 flex-1 flex">
+            <View className="justify-center h-11">
+              <MaterialCommunityIcons
+                name="magnify"
+                size={30}
+                color="#6b21a8"
+                padding={10}
+              />
+            </View>
             <GooglePlacesSearch
               setLocation={setLocation}
               setLocationName={setLocationName}
             ></GooglePlacesSearch>
-            <View className="flex-row items-center justify-center pb-1">
+            <View className="flex-row h-11 items-center pb-1">
               <TouchableOpacity
                 onPress={() => {
                   if (userLocation) {
@@ -206,24 +216,32 @@ export default function HomeScreen() {
           restaurantList={closeRestaurantList}
           listTitle="Closest Restaurants"
           listSubtitle="Spots near you"
+          listLoading={locationsLoading}
+          setListLoading={setLocationsLoading}
         ></RestaurantsRow>
         {/* Dedicated Restaurants Rows */}
         <RestaurantsRow
           restaurantList={dedicatedRestaurantList}
           listTitle="Dedicated gluten free spots"
           listSubtitle="Places reported to be 100% gluten free"
+          listLoading={dedicatedGfLoading}
+          setListLoading={setDedicatedGfLoading}
         ></RestaurantsRow>
         {/* Sorted by safety row */}
         <RestaurantsRow
           restaurantList={sortBySafetyList}
           listTitle="Sorted by safety score"
           listSubtitle="Serve gluten but with a high safety score"
+          listLoading={locationsLoading}
+          setListLoading={setLocationsLoading}
         ></RestaurantsRow>
         {/* Sorted by safety row */}
         <RestaurantsRow
           restaurantList={topReviewsList}
           listTitle="Top rated spots"
           listSubtitle="Spots with the highest average rating"
+          listLoading={locationsLoading}
+          setListLoading={setLocationsLoading}
         ></RestaurantsRow>
       </ScrollView>
       <TouchableOpacity

@@ -73,7 +73,7 @@ export default function AddReviewModal({
                     {20 - reviewText.length} more characters
                   </Text>
                 )}
-                {reviewText.length > 20 ? (
+                {reviewText.length >= 20 ? (
                   <Ionicons
                     name="checkmark-circle-sharp"
                     size={24}
