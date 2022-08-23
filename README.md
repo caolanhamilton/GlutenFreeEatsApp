@@ -1,5 +1,5 @@
-# GlutenFree Eats App
-GlutenFree Eats is an iOS and Android app that allows sufferers of celiac disease and gluten intolerance to crowdsource safe places to dine out. People with celiac disease and gluten intolerance often have different requirements about the acceptable level of cross-contamination. This app allows people to only see restaurants which are 100% gluten-free or to view restaurants that serve gluten but which other users believe to be safe places to eat. 
+# Gluten Free Eats App
+Gluten Free Eats is an iOS and Android app that allows sufferers of celiac disease and gluten intolerance to crowdsource safe places to dine out. People with celiac disease and gluten intolerance often have different requirements about the acceptable level of cross-contamination. This app allows people to only see restaurants which are 100% gluten-free or to view restaurants that serve gluten but which other users believe to be safe places to eat. 
 
 ## Features
  - See a crowd-sourced list of suitable places to eat
