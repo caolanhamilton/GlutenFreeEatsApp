@@ -14,7 +14,7 @@ Gluten Free Eats is an iOS and Android app that allows sufferers of celiac disea
 You can visit a live version of the app hosted with Appetize.io here:
 
  - [Andriod mobile](https://appetize.io/app/m5pvitw5adbhaz7hjdc2m2oybq?device=pixel4xl&osVersion=12.0&scale=75) 
- - [Andriod tablet](https://appetize.io/app/m5pvitw5adbhaz7hjdc2m2oybq?device=galaxytabs7&osVersion=12.0&scale=75). 
+ - [Andriod tablet](https://appetize.io/app/m5pvitw5adbhaz7hjdc2m2oybq?device=galaxytabs7&osVersion=12.0&scale=75)
 
 Note performance in the web simulator is much slower than when installed on a physical device.
 
