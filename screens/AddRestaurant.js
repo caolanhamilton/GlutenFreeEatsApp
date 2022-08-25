@@ -195,6 +195,8 @@ export default function AddRestaurant({}) {
                     multiline={true}
                     fontSize={16}
                     onChangeText={(text) => setDescription(text)}
+                    returnKeyType="done"
+                    blurOnSubmit={true}
                   ></TextInput>
                   <View className="self-end flex-row items-center mx-1">
                     {description.length < 20 && (
@@ -236,6 +238,8 @@ export default function AddRestaurant({}) {
                     fontSize={16}
                     onChangeText={(text) => setReviewText(text)}
                     placeholder="Describe your experience"
+                    returnKeyType="done"
+                    blurOnSubmit={true}
                   ></TextInput>
                   <View className="self-end flex-row items-center mx-1">
                     {reviewText.length < 20 && (

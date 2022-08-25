@@ -11,6 +11,7 @@ import { MaterialIcons, Entypo, Ionicons } from "@expo/vector-icons";
 import Modal from "react-native-modal";
 import { postReview } from "../api/apiCalls";
 import { AuthContext } from "../Context";
+import { Dimensions } from "react-native";
 
 export default function AddReviewModal({
   restaurant,
@@ -24,6 +25,7 @@ export default function AddReviewModal({
   const [reviewText, setReviewText] = useState("");
   const [reviewObj, setReviewObj] = useState({});
   const { user } = useContext(AuthContext);
+  const deviceHeight = Dimensions.get("screen").height;
 
   return (
     <View className={"flex-1"}>
@@ -36,6 +38,7 @@ export default function AddReviewModal({
         style={{ margin: 0, marginTop: 200 }}
         useNativeDriver={false}
         propagateSwipe={true}
+        statusBarTranslucent
       >
         <View className="flex-1 rounded-t-3xl  bg-purple-800">
           <View className="items-center">
@@ -66,6 +69,8 @@ export default function AddReviewModal({
                 fontSize={16}
                 onChangeText={(text) => setReviewText(text)}
                 placeholder="Describe your experience"
+                returnKeyType="done"
+                blurOnSubmit={true}
               ></TextInput>
               <View className="self-end flex-row items-center">
                 {reviewText.length < 20 && (
@@ -114,10 +119,10 @@ export default function AddReviewModal({
                   reviewObj["overallRating"] = overAllRating;
                   reviewObj["reviewText"] = reviewText;
                   reviewObj["userId"] = user.uid;
-                  postReview(reviewObj).then(() => { 
+                  postReview(reviewObj).then(() => {
                     setReviews([...reviews, reviewObj]);
                     setModalVisible(false);
-                  })
+                  });
                 }}
               >
                 <Text className="font-bold text-base text-center">Post</Text>

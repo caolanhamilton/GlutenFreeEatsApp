@@ -25,9 +25,10 @@ export default function RadiusModal({
         swipeDirection="down"
         onBackdropPress={() => setModalVisible(false)}
         scrollHorizontal={true}
-        style={{ margin: 0, marginTop: 400 }}
+        style={{ margin: 0, marginTop: 340 }}
         useNativeDriver={false}
         propagateSwipe={true}
+        statusBarTranslucent
       >
         <View className="flex-1 rounded-t-3xl  bg-purple-800">
           <View className="items-center">
