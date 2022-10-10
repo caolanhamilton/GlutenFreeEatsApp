@@ -2,8 +2,7 @@ import axios from "axios";
 import { getIdToken } from "../firebaseAuthFuncs";
 
 const api = axios.create({
-  baseURL: "https://gf-app.herokuapp.com",
-
+  baseURL: "https://gf-app.up.railway.app",
 });
 
 //locations
