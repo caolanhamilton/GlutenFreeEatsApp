@@ -34,7 +34,6 @@ export default function HomeScreen() {
   const [dedicatedGfLoading, setDedicatedGfLoading] = useState(true);
   const { user, userLocations } = useContext(AuthContext);
 
-  console.log(GOOGLE_MAPS_KEY)
   Location.setGoogleApiKey(GOOGLE_MAPS_KEY);
 
   useEffect(() => {
