@@ -127,6 +127,7 @@ export const updateUserEmail = async (email) => {
 
 export const addFavourite = async (locationId) => {
   const idToken = await getIdToken();
+  console.log(idToken);
   return api.post(
     `/users/favourites`,
     {

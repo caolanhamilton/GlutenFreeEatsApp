@@ -34,7 +34,7 @@ export default function HomeScreen() {
   const [dedicatedGfLoading, setDedicatedGfLoading] = useState(true);
   const { user, userLocations } = useContext(AuthContext);
 
-
+  console.log(GOOGLE_MAPS_KEY)
   Location.setGoogleApiKey(GOOGLE_MAPS_KEY);
 
   useEffect(() => {
@@ -56,9 +56,9 @@ export default function HomeScreen() {
     }).then((res) => {
       const filteredResults = res.filter(
         (result) => result.street && result.subregion
-      );
+      );;
       setLocationName(
-        `${filteredResults[0].street}, ${filteredResults[0].subregion}`
+        `${filteredResults[0]?.street}, ${filteredResults[0]?.subregion}`
       );
     });
   }, [location]);
