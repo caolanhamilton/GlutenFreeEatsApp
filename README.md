@@ -15,6 +15,10 @@ You can visit a live version of the app hosted with Appetize.io here:
 
  - [Andriod mobile](https://appetize.io/app/k3q5agtmjjru5b7y5t34lgla6e?device=pixel4xl&osVersion=12.0&scale=75) 
  - [Andriod tablet](https://appetize.io/app/k3q5agtmjjru5b7y5t34lgla6e?device=galaxytabs7&osVersion=12.0&scale=75)
+ 
+You can use the following credentials to login in and use user only features:
+test@tester.com
+test1234
 
 Note performance in the web simulator is much slower than when installed on a physical device.
 
