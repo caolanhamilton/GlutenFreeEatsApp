@@ -18,7 +18,7 @@ You can visit a live version of the app hosted with Appetize.io here:
  
 You can use the following credentials to login in and use user only features:
 test@tester.com
-test1234
+test123
 
 Note performance in the web simulator is much slower than when installed on a physical device.
 
